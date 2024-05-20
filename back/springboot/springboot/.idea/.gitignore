@@ -1,8 +1,8 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+# Datasource local storage ignored files
+/../../../../../../../:\自媒体平台资料\B站-武哥聊编程\带小白做毕设系列\项目源码\springboot\.idea/dataSources/
+/dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
-# Datasource local storage ignored files
-/dataSources/
-/dataSources.local.xml
