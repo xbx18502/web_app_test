@@ -22,6 +22,8 @@ const routes = [
       { path: 'adminPerson', name: 'AdminPerson', meta: { name: '个人信息' }, component: () => import('../views/manager/AdminPerson') },
       { path: 'password', name: 'Password', meta: { name: '修改密码' }, component: () => import('../views/manager/Password') },
       { path: 'notice', name: 'Notice', meta: { name: '公告信息' }, component: () => import('../views/manager/Notice') },
+      { path: 'user', name: 'User', meta: { name: 'user info' }, component: () => import('../views/manager/User') },
+      { path: 'category', name: 'Category', meta: { name: 'blog category' }, component: () => import('../views/manager/Category') },
     ]
   },
   {
@@ -29,7 +31,7 @@ const routes = [
     name: 'Front',
     component: () => import('../views/Front.vue'),
     children: [
-      { path: 'home', name: 'Home', meta: { name: '系统首页' }, component: () => import('../views/front/Home') },
+      { path: 'home', name: 'FHome', meta: { name: '系统首页' }, component: () => import('../views/front/Home') },
       { path: 'person', name: 'Person', meta: { name: '个人信息' }, component: () => import('../views/front/Person') },
     ]
   },

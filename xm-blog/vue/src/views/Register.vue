@@ -1,24 +1,24 @@
 <template>
   <div class="container">
-    <div style="width: 400px; padding: 30px; background-color: white; border-radius: 5px;">
-      <div style="text-align: center; font-size: 20px; margin-bottom: 20px; color: #333">欢迎注册</div>
+    <div style="width: 390px; padding: 50px 30px; background-color: rgba(255,255,255,.75); border-radius: 5px;">
+      <div style="text-align: center; font-size: 24px; margin-bottom: 30px; color: #333">Welcome to register the blog&forum</div>
       <el-form :model="form" :rules="rules" ref="formRef">
         <el-form-item prop="username">
-          <el-input prefix-icon="el-icon-user" placeholder="请输入账号" v-model="form.username"></el-input>
+          <el-input size="medium" prefix-icon="el-icon-user" placeholder="请输入账号" v-model="form.username"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input prefix-icon="el-icon-lock" placeholder="请输入密码" show-password  v-model="form.password"></el-input>
+          <el-input size="medium" prefix-icon="el-icon-lock" placeholder="请输入密码" show-password  v-model="form.password"></el-input>
         </el-form-item>
         <el-form-item prop="confirmPass">
-          <el-input prefix-icon="el-icon-lock" placeholder="请确认密码" show-password  v-model="form.confirmPass"></el-input>
+          <el-input size="medium" prefix-icon="el-icon-lock" placeholder="请确认密码" show-password  v-model="form.confirmPass"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button style="width: 100%; background-color: #333; border-color: #333; color: white" @click="register">注 册</el-button>
+          <el-button size="medium" style="width: 100%; background-color: #f28787; border-color: #333; color: white" @click="register">注 册</el-button>
         </el-form-item>
         <div style="display: flex; align-items: center">
           <div style="flex: 1"></div>
           <div style="flex: 1; text-align: right">
-            已有账号？请 <a href="/login">登录</a>
+            Already have an account? <a href="/login">Sign in</a>
           </div>
         </div>
       </el-form>
@@ -41,7 +41,7 @@ export default {
       }
     }
     return {
-      form: {},
+      form: {role:"USER"},
       rules: {
         username: [
           { required: true, message: '请输入账号', trigger: 'blur' },

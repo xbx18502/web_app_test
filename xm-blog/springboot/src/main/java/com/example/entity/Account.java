@@ -44,9 +44,7 @@ public class Account {
         this.name = name;
     }
 
-    public String getPassword() {
-        return password;
-    }
+    public String getPassword() {return password;}
 
     public void setPassword(String password) {
         this.password = password;

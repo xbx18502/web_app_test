@@ -59,13 +59,13 @@
                 role = #{role},
             </if>
             <if test="sex != null">
-                role = #{sex},
+                sex = #{sex},
             </if>
             <if test="info != null">
-                role = #{info},
+                info = #{info},
             </if>
             <if test="birth != null">
-                role = #{birth},
+                birth = #{birth},
             </if>
         </set>
         where id = #{id}
@@ -75,5 +75,16 @@
     </delete>
     <select id="selectByUsername" resultType="com.example.entity.User">
         select * from user where username = #{username}
+    </select>
+    <select id="selectById" resultType="com.example.entity.User">
+        select * from user where id = #{id};
+    </select>
+    <select id="selectAll" resultType="com.example.entity.User">
+        select * from user
+        <where>
+            <if test="username!=null"> and username = #{username}</if>
+            <if test="name!=null"> and name like concat('%',#{name},'%')</if>
+        </where>
+        order by id desc
     </select>
 </mapper>
