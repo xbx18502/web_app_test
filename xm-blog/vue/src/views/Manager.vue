@@ -44,6 +44,7 @@
             </template>
             <el-menu-item index="/category">blog category</el-menu-item>
             <el-menu-item index="/notice">公告信息</el-menu-item>
+            <el-menu-item index="/blog">blog info</el-menu-item>
           </el-submenu>
 
           <el-submenu index="user">
