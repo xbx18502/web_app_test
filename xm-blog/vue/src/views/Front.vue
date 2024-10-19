@@ -1,19 +1,24 @@
 <template>
   <div>
-    <div class="front-notice"><i class="el-icon-bell" style="margin-right: 2px"></i>公告：{{ top }}</div>
+    <div class="front-notice"><i class="el-icon-bell" style="margin-right: 2px; background-color: "></i>公告：{{ top }}</div>
     <!--头部-->
     <div class="front-header">
       <div class="front-header-left">
         <img src="../assets/imgs/logo.png" alt="">
-        <div class="title">项目前台</div>
+        <div class="title">blog&forum</div>
       </div>
       <div class="front-header-center">
         <div class="front-header-nav">
           <el-menu :default-active="$route.path" mode="horizontal" router>
 						<el-menu-item index="/front/home">首页</el-menu-item>
+						<el-menu-item index="/front/activity">activity center</el-menu-item>
 						<el-menu-item index="/front/person">个人中心</el-menu-item>
           </el-menu>
         </div>
+      </div>
+      <div>
+        <el-input style="width: 250px; margin-right:10px" placeholder="please input blog keyword">search</el-input>
+        <el-button type="success">search</el-button>
       </div>
       <div class="front-header-right">
         <div v-if="!user.username">
@@ -24,7 +29,7 @@
           <el-dropdown>
             <div class="front-header-dropdown">
               <img :src="user.avatar" alt="">
-              <div style="margin-left: 10px">
+              <div style="margin-left: 10px; color:#ffff00">
                 <span>{{ user.name }}</span><i class="el-icon-arrow-down" style="margin-left: 5px"></i>
               </div>
             </div>

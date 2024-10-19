@@ -113,7 +113,9 @@
       </div>
     </el-dialog>
     <el-dialog title="blog content" :visible.sync="fromVisible1" width="50%" :close-on-click-model="true" destroy-on-close>
-      <div v-html="content"></div>
+      <div class="w-e-text">
+        <div v-html="content"></div>
+      </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="fromVisible1 = false">close</el-button>
       </div>
