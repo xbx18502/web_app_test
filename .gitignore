@@ -1,5 +1,6 @@
 # 忽略操作系统生成的文件
 .DS_Store
+**/.DS_Store
 
 # 忽略 node_modules 目录
 xm-blog/vue/node_modules/
