@@ -167,7 +167,7 @@ export default {
       })
     },
     handleCurrentChange(pageNum) {
-      this.load(pageNum)
+      this.loadBlogs(pageNum)
     },
   }
 }
