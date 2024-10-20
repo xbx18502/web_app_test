@@ -85,4 +85,11 @@ public class BlogController {
         return Result.success(page);
     }
 
+    /**博客榜单*/
+    @GetMapping("/selectTop")
+    public Result selectTop() {
+        List<Blog> list = blogService.selectTop();
+        return Result.success(list);
+    }
+
 }

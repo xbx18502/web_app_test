@@ -82,4 +82,14 @@ public class BlogService {
         return PageInfo.of(list);
     }
 
+    /**
+     * 博客榜单
+     */
+    public List<Blog> selectTop(){
+        List<Blog> bloglist = this.selectAll(null);
+        bloglist = bloglist.stream().sorted((b1,b2)->b2.getReadCount()
+                .compareTo(b1.getReadCount())).limit(10).collect(Collectors.toList());
+        return bloglist;
+    }
+
 }
