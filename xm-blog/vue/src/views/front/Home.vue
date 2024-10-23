@@ -20,8 +20,8 @@
                   <span style="color: #666"><i class="el-icon-like"></i> {{ item.likesCount }}</span>
                 </div>
                 <div style="width: fit-content">
-                  <el-tag type="primary" style="margin-right: 10px">后端</el-tag>
-                  <el-tag type="primary">面试</el-tag>
+                  <el-tag type="primary" style="margin-right: 10px">backend</el-tag>
+                  <el-tag type="primary">interview</el-tag>
                 </div>
               </div>
             </div>
@@ -29,7 +29,7 @@
               <img style="max-width: 100%; max-height: 100%; border-radius: 5px;" :src="item.cover" alt="">
             </div>
           </div>
-          <div v-if="total === 0" style="padding: 20px 0; text-align: center; font-size: 16px; color: #666">暂无数据</div>
+          <div v-if="total === 0" style="padding: 20px 0; text-align: center; font-size: 16px; color: #666">no data</div>
 
           <div style="margin-top: 10px" v-if="total">
             <el-pagination
@@ -81,8 +81,8 @@
         </div>
 
         <div style="line-height: 30px; color: #8c939d;padding: 0 10px">
-          <div>举报邮箱： feedback@xitu.io</div>
-          <div>座机电话： 010-83434395</div>
+          <div>email： xbx18502@gmail.com</div>
+          <div>tel： 010-83434395</div>
         </div>
       </div>
 
@@ -103,7 +103,7 @@ export default {
 
   data() {
     return {
-      current: '全部博客',  //当前选中的分类名称
+      current: 'All blogs',  //当前选中的分类名称
       categoryList: [],
       tableData: [],  // 所有的数据
       pageNum: 1,   // 当前的页码
@@ -150,7 +150,7 @@ export default {
       // 请求分类的数据
       this.$request.get('/category/selectAll').then(res => {
         this.categoryList = res.data || []
-        this.categoryList.unshift({ name: '全部博客' })
+        this.categoryList.unshift({ name: 'All blogs' })
       })
     },
     loadBlogs(pageNum) {
@@ -159,7 +159,7 @@ export default {
         params: {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
-          categoryName: this.current === '全部博客' ? null : this.current,
+          categoryName: this.current === 'All blogs' ? null : this.current,
         }
       }).then(res => {
         this.tableData = res.data?.list

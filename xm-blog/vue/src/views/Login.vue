@@ -4,10 +4,10 @@
       <div style="text-align: center; font-size: 24px; margin-bottom: 30px; color: #333">Blog&forum Platform</div>
       <el-form :model="form" :rules="rules" ref="formRef">
         <el-form-item prop="username">
-          <el-input size="medium" prefix-icon="el-icon-user" placeholder="请输入账号" v-model="form.username"></el-input>
+          <el-input size="medium" prefix-icon="el-icon-user" placeholder="input username" v-model="form.username"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input size="medium" prefix-icon="el-icon-lock" placeholder="请输入密码" show-password  v-model="form.password"></el-input>
+          <el-input size="medium" prefix-icon="el-icon-lock" placeholder="input password" show-password  v-model="form.password"></el-input>
         </el-form-item>
         <el-form-item prop="role">
          <el-radio-group v-model="form.role">
@@ -23,7 +23,7 @@
           </div>
         </el-form-item>
         <el-form-item>
-          <el-button size="medium" style="width: 100%; background-color: #329900; border-color: #333; color: white" @click="login">登 录</el-button>
+          <el-button size="medium" style="width: 100%; background-color: #329900; border-color: #333; color: white" @click="login">Log in</el-button>
         </el-form-item>
         <div style="display: flex; align-items: center">
           <div style="flex: 1"></div>
@@ -49,10 +49,10 @@ export default {
       form: { role: 'ADMIN' },
       rules: {
         username: [
-          { required: true, message: '请输入账号', trigger: 'blur' },
+          { required: true, message: 'input username', trigger: 'blur' },
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
+          { required: true, message: 'input password', trigger: 'blur' },
         ]
       },
       code: '',   // 表单绑定的验证码

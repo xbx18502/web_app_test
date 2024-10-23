@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="card" style="padding: 15px">
-      您好，{{ user?.name }}！欢迎使用本系统
+      Hello，{{ user?.name }}！weicome to use this project
     </div>
 
     <div style="display: flex; margin: 10px 0">

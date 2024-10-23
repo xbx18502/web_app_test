@@ -4,16 +4,16 @@
       <div style="text-align: center; font-size: 24px; margin-bottom: 30px; color: #333">Welcome to register the blog&forum</div>
       <el-form :model="form" :rules="rules" ref="formRef">
         <el-form-item prop="username">
-          <el-input size="medium" prefix-icon="el-icon-user" placeholder="请输入账号" v-model="form.username"></el-input>
+          <el-input size="medium" prefix-icon="el-icon-user" placeholder="input username" v-model="form.username"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input size="medium" prefix-icon="el-icon-lock" placeholder="请输入密码" show-password  v-model="form.password"></el-input>
+          <el-input size="medium" prefix-icon="el-icon-lock" placeholder="input password" show-password  v-model="form.password"></el-input>
         </el-form-item>
         <el-form-item prop="confirmPass">
-          <el-input size="medium" prefix-icon="el-icon-lock" placeholder="请确认密码" show-password  v-model="form.confirmPass"></el-input>
+          <el-input size="medium" prefix-icon="el-icon-lock" placeholder="confirm password" show-password  v-model="form.confirmPass"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button size="medium" style="width: 100%; background-color: #f28787; border-color: #333; color: white" @click="register">注 册</el-button>
+          <el-button size="medium" style="width: 100%; background-color: #f28787; border-color: #333; color: white" @click="register">register</el-button>
         </el-form-item>
         <div style="display: flex; align-items: center">
           <div style="flex: 1"></div>
@@ -33,9 +33,9 @@ export default {
     // 验证码校验
     const validatePassword = (rule, confirmPass, callback) => {
       if (confirmPass === '') {
-        callback(new Error('请确认密码'))
+        callback(new Error('confirm password'))
       } else if (confirmPass !== this.form.password) {
-        callback(new Error('两次输入的密码不一致'))
+        callback(new Error('password does not match '))
       } else {
         callback()
       }
@@ -44,10 +44,10 @@ export default {
       form: {role:"USER"},
       rules: {
         username: [
-          { required: true, message: '请输入账号', trigger: 'blur' },
+          { required: true, message: 'input username', trigger: 'blur' },
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
+          { required: true, message: 'input password', trigger: 'blur' },
         ],
         confirmPass: [
           { validator: validatePassword, trigger: 'blur' }
@@ -66,7 +66,7 @@ export default {
           this.$request.post('/register', this.form).then(res => {
             if (res.code === '200') {
               this.$router.push('/')  // 跳转登录页面
-              this.$message.success('注册成功')
+              this.$message.success('register successfully')
             } else {
               this.$message.error(res.msg)
             }

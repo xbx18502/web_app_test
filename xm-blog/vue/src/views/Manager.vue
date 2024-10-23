@@ -4,12 +4,12 @@
     <div class="manager-header">
       <div class="manager-header-left">
         <img src="../assets/imgs/logo.png" />
-        <div class="title">后台管理系统</div>
+        <div class="title">management system</div>
       </div>
 
       <div class="manager-header-center">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
           <el-breadcrumb-item :to="{ path: $route.path }">{{ $route.meta.name }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -21,9 +21,9 @@
             <div>{{ user.name ||  '管理员' }}</div>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item @click.native="goToPerson">个人信息</el-dropdown-item>
-            <el-dropdown-item @click.native="$router.push('/password')">修改密码</el-dropdown-item>
-            <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
+            <el-dropdown-item @click.native="goToPerson">personal info</el-dropdown-item>
+            <el-dropdown-item @click.native="$router.push('/password')">change password</el-dropdown-item>
+            <el-dropdown-item @click.native="logout">sign out</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -36,24 +36,24 @@
         <el-menu :default-openeds="['info', 'user']" router style="border: none" :default-active="$route.path">
           <el-menu-item index="/home">
             <i class="el-icon-s-home"></i>
-            <span slot="title">系统首页</span>
+            <span slot="title">system home</span>
           </el-menu-item>
           <el-submenu index="info">
             <template slot="title">
-              <i class="el-icon-menu"></i><span>信息管理</span>
+              <i class="el-icon-menu"></i><span>info management</span>
             </template>
             <el-menu-item index="/category">blog category</el-menu-item>
-            <el-menu-item index="/notice">公告信息</el-menu-item>
+            <el-menu-item index="/notice">Announcement</el-menu-item>
             <el-menu-item index="/blog">blog info</el-menu-item>
             <el-menu-item index="/activity">activity info</el-menu-item>
           </el-submenu>
 
           <el-submenu index="user">
             <template slot="title">
-              <i class="el-icon-menu"></i><span>用户管理</span>
+              <i class="el-icon-menu"></i><span>user management</span>
             </template>
-            <el-menu-item index="/admin">管理员信息</el-menu-item>
-            <el-menu-item index="/user">userinfo</el-menu-item>
+            <el-menu-item index="/admin">admin info</el-menu-item>
+            <el-menu-item index="/user">user info</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>

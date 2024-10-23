@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="front-notice"><i class="el-icon-bell" style="margin-right: 2px; background-color: "></i>公告：{{ top }}</div>
+    <div class="front-notice"><i class="el-icon-bell" style="margin-right: 2px; background-color: "></i>Announcement：{{ top }}</div>
     <!--头部-->
     <div class="front-header">
       <div class="front-header-left">
@@ -10,9 +10,9 @@
       <div class="front-header-center">
         <div class="front-header-nav">
           <el-menu :default-active="$route.path" mode="horizontal" router>
-						<el-menu-item index="/front/home">首页</el-menu-item>
+						<el-menu-item index="/front/home">Home</el-menu-item>
 						<el-menu-item index="/front/activity">activity center</el-menu-item>
-						<el-menu-item index="/front/person">个人中心</el-menu-item>
+						<el-menu-item index="/front/person">About you</el-menu-item>
           </el-menu>
         </div>
       </div>
@@ -22,8 +22,8 @@
       </div>
       <div class="front-header-right">
         <div v-if="!user.username">
-          <el-button @click="$router.push('/login')">登录</el-button>
-          <el-button @click="$router.push('/register')">注册</el-button>
+          <el-button @click="$router.push('/login')">Log in </el-button>
+          <el-button @click="$router.push('/register')">Sign up</el-button>
         </div>
         <div v-else>
           <el-dropdown>
@@ -35,7 +35,7 @@
             </div>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>
-                <div style="text-decoration: none" @click="logout">退出</div>
+                <div style="text-decoration: none" @click="logout">Log out</div>
               </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
