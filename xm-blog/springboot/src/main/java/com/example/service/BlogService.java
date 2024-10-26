@@ -24,6 +24,8 @@ public class BlogService {
     @Resource
     private BlogMapper blogMapper;
 
+    @Resource
+    UserService userService;
     /**
      * 新增
      */
@@ -63,7 +65,10 @@ public class BlogService {
      * 根据ID查询
      */
     public Blog selectById(Integer id) {
-        return blogMapper.selectById(id);
+        Blog blog = blogMapper.selectById(id);
+        User user = userService.selectById(blog.getUserId());
+        blog.setUser(user); //set author info
+        return blog;
     }
 
     /**

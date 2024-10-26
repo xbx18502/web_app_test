@@ -6,6 +6,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/global.css'
 import '@/assets/css/theme/index.css'
 import request from "@/utils/request";
+import 'highlight.js/styles/monokai-sublime.css'
 
 Vue.config.productionTip = false
 
