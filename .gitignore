@@ -4,3 +4,8 @@
 
 # 忽略 node_modules 目录
 xm-blog/vue/node_modules/
+
+*.jar
+*.jar.original
+
+/xm-blog/vue/dist/
