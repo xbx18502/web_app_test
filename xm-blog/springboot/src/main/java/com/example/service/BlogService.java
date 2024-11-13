@@ -1,6 +1,7 @@
 package com.example.service;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
 import com.example.common.enums.RoleEnum;
@@ -26,6 +27,9 @@ public class BlogService {
 
     @Resource
     UserService userService;
+
+    @Resource
+    LikesServices likesServices;
     /**
      * 新增
      */
@@ -68,6 +72,8 @@ public class BlogService {
         Blog blog = blogMapper.selectById(id);
         User user = userService.selectById(blog.getUserId());
         blog.setUser(user); //set author info
+        // 查询当前博客的点赞数据
+        likesServices.selectByFidAndModule();
         return blog;
     }
 
@@ -97,4 +103,21 @@ public class BlogService {
         return bloglist;
     }
 
+    public Set<Blog> selectRecommend(Integer blogId) {
+        Blog blog = this.selectById(blogId);
+        String tags = blog.getTags();
+        Set<Blog> blogSet = new HashSet<>();
+        if(ObjectUtil.isNotEmpty(tags)){
+            List<Blog> blogList = this.selectAll(null);
+            JSONArray tagsArr = JSONUtil.parseArray(tags);
+            for (Object tag : tagsArr) {
+                String tagStr = tag.toString();
+                //筛选出包含当前博客标签的其他博客的博客列表
+                blogSet.addAll(blogList.stream().filter(b -> b.getTags()
+                        .contains(tagStr)&& !blogId.equals(b.getId())).collect(Collectors.toSet()));
+            }
+        }
+        return blogSet.stream().limit(5).collect(Collectors.toSet());
+
+    }
 }

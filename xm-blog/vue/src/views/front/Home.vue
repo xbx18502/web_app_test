@@ -11,7 +11,7 @@
         <div class="card" style="min-height: 80vh">
           <div class="blog-box" v-for="item in tableData" :key="item.id" v-if="total > 0">
             <div style="flex: 1; width: 0">
-              <a :href="'/front/blogDetail?blogId=' + item.id" target="_blank"><div class="blog-title" >{{ item.title }}</div></a>
+              <a :href="'/front/blogDetail?blogId=' + item.id" ><div class="blog-title" >{{ item.title }}</div></a>
               <div class="line1" style="color: #666; margin-bottom: 10px; font-size: 13px">{{ item.descr }}</div>
               <div style="display: flex">
                 <div style="flex: 1; font-size: 13px">
@@ -92,11 +92,12 @@
 <script>
 
 
-
+// if want to open a new page when click on blog
+// <a :href="'/front/blogDetail?blogId=' + item.id" target="_blank"><div class="blog-title" >{{ item.title }}</div></a>
 import Footer from "@/components/Footer.vue";
 
 export default {
-  components:{
+  components: {
     Footer
   },
 
@@ -108,10 +109,10 @@ export default {
       pageNum: 1,   // 当前的页码
       pageSize: 10,  // 每页显示的个数
       total: 0,
-      topList:[],
-      showList:[], //content of blog list being displayed
-      lastIndex:0,
-      topActivityList:[],
+      topList: [],
+      showList: [], //content of blog list being displayed
+      lastIndex: 0,
+      topActivityList: [],
     }
   },
   mounted() {
@@ -123,21 +124,21 @@ export default {
   },
   // methods：本页面所有的点击事件或者其他函数定义区
   methods: {
-    loadTopActivity(){
+    loadTopActivity() {
       this.$request.get('/activity/selectTop').then(res => {
         this.topActivityList = res.data || []
       })
     },
-    refreshTop(){
+    refreshTop() {
       this.$request.get('/blog/selectTop').then(res => {
         this.topList = res.data || []
-        let i=1
-        this.topList.forEach(item => item.index=i++)
-        if(this.lastIndex >=10){
-          this.lastIndex=0
+        let i = 1
+        this.topList.forEach(item => item.index = i++)
+        if (this.lastIndex >= 10) {
+          this.lastIndex = 0
         }
-        this.showList=this.topList.slice(this.lastIndex,this.lastIndex+5)
-        this.lastIndex+=5
+        this.showList = this.topList.slice(this.lastIndex, this.lastIndex + 5)
+        this.lastIndex += 5
       })
     },
     selectCategory(categoryName) {
@@ -149,7 +150,7 @@ export default {
       // 请求分类的数据
       this.$request.get('/category/selectAll').then(res => {
         this.categoryList = res.data || []
-        this.categoryList.unshift({ name: 'All blogs' })
+        this.categoryList.unshift({name: 'All blogs'})
       })
     },
     loadBlogs(pageNum) {

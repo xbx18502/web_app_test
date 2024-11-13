@@ -1,5 +1,7 @@
 package com.example.entity;
 
+import java.util.Objects;
+
 /**
  * 博客信息
  */
@@ -133,5 +135,18 @@ public class Blog {
 
     public void setReadCount(Integer readCount) {
         this.readCount = readCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Blog blog = (Blog) o;
+        return Objects.equals(id, blog.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

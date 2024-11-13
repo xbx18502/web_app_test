@@ -70,10 +70,10 @@
           </div>
           <div>
             <div style="margin-bottom: 15px" v-for="item in recommendList" :key="item.id">
-              <div style="margin-bottom: 10px" class="line1">Automated deployment scripts suitable for small companies</div>
+              <div style="margin-bottom: 10px" class="line1">{{item.title}}</div>
               <div style="color: #666666">
-                <span style="margin-left: 10px">Read</span> <span>2024</span>
-                <span style="margin-left: 10px">Like</span> <span>10</span>
+                <span style="margin-left: 10px">read</span> <span>{{item.readCount}}</span>
+                <span style="margin-left: 10px">likes</span> <span>{{item.likesCount}}</span>
               </div>
             </div>
 
@@ -112,7 +112,7 @@ export default {
       blog:{},
       tagsArr:{},
       recommendList: [
-        {title:'your code is awful'}
+        //{title:'your code is awful'}
       ],
     }
   },
@@ -124,6 +124,10 @@ export default {
       this.$request.get('/blog/selectById/' + this.blogId).then(res=>{
         this.blog=res.data || {}
         this.tagsArr=JSON.parse(this.blog.tags || '[]')
+      })
+
+      this.$request.get('/blog/selectRecommend/' + this.blogId).then(res=>{
+        this.recommendList =res.data || []
       })
     }
   }
