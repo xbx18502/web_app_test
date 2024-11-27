@@ -32,6 +32,46 @@ public class Blog {
 
     private User user;
 
+    private Integer likesCount;
+
+    private Boolean userLike;
+
+    private Integer collectCount;
+
+    private Boolean userCollect;
+
+    public Boolean getUserCollect() {
+        return userCollect;
+    }
+
+    public void setUserCollect(Boolean userCollect) {
+        this.userCollect = userCollect;
+    }
+
+    public Integer getCollectCount() {
+        return collectCount;
+    }
+
+    public void setCollectCount(Integer collectCount) {
+        this.collectCount = collectCount;
+    }
+
+    public Boolean getUserLike() {
+        return userLike;
+    }
+
+    public void setUserLike(Boolean userLike) {
+        this.userLike = userLike;
+    }
+
+    public Integer getLikesCount() {
+        return likesCount;
+    }
+
+    public void setLikesCount(Integer likesCount) {
+        this.likesCount = likesCount;
+    }
+
     public User getUser() {
         return user;
     }
@@ -149,4 +189,7 @@ public class Blog {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+
+
 }

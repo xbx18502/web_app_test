@@ -22,11 +22,12 @@
 
 
         </div>
-
-        <div class="card" style="text-align: center;font-size: 20px;color: #666666; margin-bottom: 10px">
-          <span style="margin-right: 20px;cursor: pointer"><i class="el-icon-thumb"></i> 10</span>
-          <span style="margin-right: 20px;cursor: pointer"><i class="el-icon-star-off"></i> 10</span>
+        <!--     点赞和收藏数据   -->
+        <div class="card" style="text-align: center; font-size: 20px; color: #666; margin-bottom: 10px">
+          <span style="margin-right: 20px; cursor: pointer;" @click="setLikes" :class="{ 'active' : blog.userLike }"><i class="el-icon-thumb"></i> {{ blog.likesCount }}</span>
+          <span style=" cursor: pointer"  @click="setCollect" :class="{ 'active' : blog.userCollect }"><i class="el-icon-star-off"></i> {{ blog.collectCount }}</span>
         </div>
+
 
         <div class="card">
 
@@ -70,7 +71,7 @@
           </div>
           <div>
             <div style="margin-bottom: 15px" v-for="item in recommendList" :key="item.id">
-              <div style="margin-bottom: 10px" class="line1">{{item.title}}</div>
+              <a :href="'/front/blogDetail?blogId=' + item.id"><div class="recommend-title line2">{{item.title}}</div></a>
               <div style="color: #666666">
                 <span style="margin-left: 10px">read</span> <span>{{item.readCount}}</span>
                 <span style="margin-left: 10px">likes</span> <span>{{item.likesCount}}</span>
@@ -120,6 +121,24 @@ export default {
     this.load()
   },
   methods:{
+    setLikes() {
+      this.$request.post('/likes/set', {  fid: this.blogId, module: '博客' }).then(res => {
+        if (res.code === '200') {
+          this.$message.success('操作成功')
+
+          this.load()  // 重新加载数据
+        }
+      })
+    },
+    setCollect() {
+      this.$request.post('/collect/set', {  fid: this.blogId, module: '博客' }).then(res => {
+        if (res.code === '200') {
+          this.$message.success('操作成功')
+
+          this.load()  // 重新加载数据
+        }
+      })
+    },
     load(){
       this.$request.get('/blog/selectById/' + this.blogId).then(res=>{
         this.blog=res.data || {}
@@ -161,5 +180,14 @@ pre code {
 }
 p {
   line-height: 30px
+}
+.active {
+  color: orange !important;
+}
+.recommend-title {
+  margin-bottom: 5px;
+}
+.recommend-title:hover {
+  color: #2a60c9;
 }
 </style>

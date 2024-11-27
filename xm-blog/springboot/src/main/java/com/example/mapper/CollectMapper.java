@@ -1,13 +1,13 @@
 package com.example.mapper;
 
-import com.example.entity.Likes;
+import com.example.entity.Collect;
 import org.apache.ibatis.annotations.Param;
 
-public interface LikesMapper {
+public interface CollectMapper {
 
-    void insert(Likes likes);
+    void insert(Collect collect);
 
-    Likes selectUserLikes(Likes likes);
+    Collect selectUserCollect(Collect collect);
 
     void deleteById(Integer id);
 
