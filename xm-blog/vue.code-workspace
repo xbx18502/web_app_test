@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "vue"
+		},
+		{
+			"path": "springboot"
+		}
+	],
+	"settings": {
+		"java.compile.nullAnalysis.mode": "automatic"
+	}
+}

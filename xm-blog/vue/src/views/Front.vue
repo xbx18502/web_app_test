@@ -13,6 +13,7 @@
 						<el-menu-item index="/front/home">Home</el-menu-item>
 						<el-menu-item index="/front/activity">activity center</el-menu-item>
 						<el-menu-item index="/front/person">About you</el-menu-item>
+            <el-menu-item index="/front/write">Write new blog</el-menu-item>
           </el-menu>
         </div>
       </div>
