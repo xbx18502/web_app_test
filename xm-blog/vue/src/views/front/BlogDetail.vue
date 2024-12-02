@@ -4,14 +4,14 @@
 
       <div style="flex:1">
         <div class="card" style="padding: 30px; margin-bottom: 10px">
-          <div style="font-weight: bold; font-size: 24px; margin-bottom: 20px">{{blog.title}}</div>
+          <div style="font-weight: bold; font-size: 24px; margin-bottom: 20px">{{ blog.title }}</div>
 
           <div style="color: #666666; margin-bottom: 20px">
-            <span style="margin-right: 20px"><i class="el-icon-user"></i>{{blog.userName}}</span>
-            <span style="margin-right: 20px"><i class="el-icon-date"></i>{{blog.date}}</span>
-            <span style="margin-right: 20px"><i class="el-icon-view"></i>{{blog.readCount}}</span>
+            <span style="margin-right: 20px"><i class="el-icon-user"></i>{{ blog.userName }}</span>
+            <span style="margin-right: 20px"><i class="el-icon-date"></i>{{ blog.date }}</span>
+            <span style="margin-right: 20px"><i class="el-icon-view"></i>{{ blog.readCount }}</span>
             <span>
-              <el-tag v-for="item in tagsArr" :key="item" type="primary" style="margin-right: 5px">{{item}}</el-tag>
+              <el-tag v-for="item in tagsArr" :key="item" type="primary" style="margin-right: 5px">{{ item }}</el-tag>
             </span>
           </div>
 
@@ -24,8 +24,10 @@
         </div>
         <!--     点赞和收藏数据   -->
         <div class="card" style="text-align: center; font-size: 20px; color: #666; margin-bottom: 10px">
-          <span style="margin-right: 20px; cursor: pointer;" @click="setLikes" :class="{ 'active' : blog.userLike }"><i class="el-icon-thumb"></i> {{ blog.likesCount }}</span>
-          <span style=" cursor: pointer"  @click="setCollect" :class="{ 'active' : blog.userCollect }"><i class="el-icon-star-off"></i> {{ blog.collectCount }}</span>
+          <span style="margin-right: 20px; cursor: pointer;" @click="setLikes" :class="{ 'active': blog.userLike }"><i
+              class="el-icon-thumb"></i> {{ blog.likesCount }}</span>
+          <span style=" cursor: pointer" @click="setCollect" :class="{ 'active': blog.userCollect }"><i
+              class="el-icon-star-off"></i> {{ blog.collectCount }}</span>
         </div>
 
 
@@ -40,8 +42,8 @@
           <div style="display: flex; align-items: center; grid-gap: 20px;margin-bottom: 10px">
             <img :src="blog.user?.avatar" alt="" style="width: 50px;height: 50px; border-radius: 50%">
             <div style="flex: 1;">
-              <div style="font-weight: bold; margin-bottom: 5px">{{blog.user?.name}}</div>
-              <div style="color: #666666; font-size: 13px" class="line2">{{blog.user?.info}}</div>
+              <div style="font-weight: bold; margin-bottom: 5px">{{ blog.user?.name }}</div>
+              <div style="color: #666666; font-size: 13px" class="line2">{{ blog.user?.info }}</div>
             </div>
           </div>
 
@@ -71,10 +73,12 @@
           </div>
           <div>
             <div style="margin-bottom: 15px" v-for="item in recommendList" :key="item.id">
-              <a :href="'/front/blogDetail?blogId=' + item.id"><div class="recommend-title line2">{{item.title}}</div></a>
+              <a :href="'/front/blogDetail?blogId=' + item.id">
+                <div class="recommend-title line2">{{ item.title }}</div>
+              </a>
               <div style="color: #666666">
-                <span style="margin-left: 10px">read</span> <span>{{item.readCount}}</span>
-                <span style="margin-left: 10px">likes</span> <span>{{item.likesCount}}</span>
+                <span style="margin-left: 10px">read</span> <span>{{ item.readCount }}</span>
+                <span style="margin-left: 10px">likes</span> <span>{{ item.likesCount }}</span>
               </div>
             </div>
 
@@ -104,25 +108,27 @@
 import Footer from "@/components/Footer.vue";
 export default {
   name: "BlogDetail",
-  components:{
+  components: {
     Footer,
   },
-  data(){
+  data() {
     return {
       blogId: this.$route.query.blogId,
-      blog:{},
-      tagsArr:{},
+      blog: {},
+      tagsArr: {},
       recommendList: [
         //{title:'your code is awful'}
       ],
+      isLoading: true  // loading status
     }
   },
-  created(){
-    this.load()
+  async created() {
+    await this.load()
+    this.isLoading = false
   },
-  methods:{
+  methods: {
     setLikes() {
-      this.$request.post('/likes/set', {  fid: this.blogId, module: '博客' }).then(res => {
+      this.$request.post('/likes/set', { fid: this.blogId, module: '博客' }).then(res => {
         if (res.code === '200') {
           this.$message.success('操作成功')
 
@@ -131,7 +137,7 @@ export default {
       })
     },
     setCollect() {
-      this.$request.post('/collect/set', {  fid: this.blogId, module: '博客' }).then(res => {
+      this.$request.post('/collect/set', { fid: this.blogId, module: '博客' }).then(res => {
         if (res.code === '200') {
           this.$message.success('操作成功')
 
@@ -139,15 +145,34 @@ export default {
         }
       })
     },
-    load(){
-      this.$request.get('/blog/selectById/' + this.blogId).then(res=>{
-        this.blog=res.data || {}
-        this.tagsArr=JSON.parse(this.blog.tags || '[]')
-      })
+    // load() {
+    //   this.$request.get('/blog/selectById/' + this.blogId).then(res => {
+    //     this.blog = res.data || {}
+    //     this.tagsArr = JSON.parse(this.blog.tags || '[]')
+    //   })
 
-      this.$request.get('/blog/selectRecommend/' + this.blogId).then(res=>{
-        this.recommendList =res.data || []
-      })
+    //   // this.$request.get('/blog/selectRecommend/' + this.blogId).then(res=>{
+    //   //   this.recommendList =res.data || []
+    //   // })
+    //   this.$request.get('/blog/selectRecommend/' + this.blogId).then(res => {
+    //     console.log('Recommend List Response:', res); // 添加日志
+    //     this.recommendList = res.data || []
+    //   }).catch(error => {
+    //     console.error('Error fetching recommend list:', error); // 捕获错误
+    //   });
+    // }
+    async load() {
+      try {
+        const blogRes = await this.$request.get('/blog/selectById/' + this.blogId)
+        this.blog = blogRes.data || {}
+        this.tagsArr = JSON.parse(this.blog.tags || '[]')
+        
+        const recommendRes = await this.$request.get('/blog/selectRecommend/' + this.blogId)
+        this.recommendList = recommendRes.data || []
+      } catch (error) {
+        console.error('Loading error:', error)
+        this.$message.error('加载失败')
+      }
     }
   }
 }
@@ -175,19 +200,31 @@ code {
   padding: 3px 5px;
   margin: 0 3px;
 }
+
 pre code {
   display: block;
 }
+
 p {
   line-height: 30px
 }
+
 .active {
   color: orange !important;
 }
+
 .recommend-title {
   margin-bottom: 5px;
 }
+
 .recommend-title:hover {
   color: #2a60c9;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 </style>

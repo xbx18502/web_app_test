@@ -1,0 +1,15 @@
+{
+    "folders": [
+      {
+        "path": "/Users/peixinxiao/code/blog/xm-blog/vue"
+      },
+      {
+        "path": "/Users/peixinxiao/code/blog/xm-blog/springboot"
+      }
+    ],
+    "settings": {
+      "vetur.validation.template": true,
+      "java.home": "/usr/bin/java",
+      "spring-boot.ls.java.home": "/usr/bin/java"
+    }
+  }

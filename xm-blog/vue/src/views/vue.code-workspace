@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../springboot"
+		}
+	],
+	"settings": {
+		"java.compile.nullAnalysis.mode": "disabled"
+	}
+}
