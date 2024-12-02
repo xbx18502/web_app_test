@@ -35,13 +35,14 @@ public class BlogService {
 
     @Resource
     CollectService collectService;
+
     /**
      * 新增
      */
     public void add(Blog blog) {
         blog.setDate(DateUtil.today());
         Account currentUser = TokenUtils.getCurrentUser();
-        if(RoleEnum.USER.name().equals(currentUser.getRole())){
+        if (RoleEnum.USER.name().equals(currentUser.getRole())) {
             blog.setUserId(currentUser.getId());
         }
         blogMapper.insert(blog);
@@ -76,7 +77,7 @@ public class BlogService {
     public Blog selectById(Integer id) {
         Blog blog = blogMapper.selectById(id);
         User user = userService.selectById(blog.getUserId());
-        blog.setUser(user);  // 设置作者信息
+        blog.setUser(user); // 设置作者信息
         // 查询当前博客的点赞数据
         int likesCount = likesService.selectByFidAndModule(id, LikesModuleEnum.BLOG.getValue());
         blog.setLikesCount(likesCount);
@@ -104,7 +105,7 @@ public class BlogService {
     public PageInfo<Blog> selectPage(Blog blog, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Blog> list = blogMapper.selectAll(blog);
-        for(Blog b : list){
+        for (Blog b : list) {
             int likesCount = likesService.selectByFidAndModule(b.getId(), LikesModuleEnum.BLOG.getValue());
             b.setLikesCount(likesCount);
         }
@@ -114,34 +115,38 @@ public class BlogService {
     /**
      * 博客榜单
      */
-    public List<Blog> selectTop(){
+    public List<Blog> selectTop() {
         List<Blog> bloglist = this.selectAll(null);
-        bloglist = bloglist.stream().sorted((b1,b2)->b2.getReadCount()
+        bloglist = bloglist.stream().sorted((b1, b2) -> b2.getReadCount()
                 .compareTo(b1.getReadCount())).limit(10).collect(Collectors.toList());
         return bloglist;
     }
-
-
 
     public Set<Blog> selectRecommend(Integer blogId) {
         Blog blog = this.selectById(blogId);
         String tags = blog.getTags();
         Set<Blog> blogSet = new HashSet<>();
-        if(ObjectUtil.isNotEmpty(tags)){
+        if (ObjectUtil.isNotEmpty(tags)) {
             List<Blog> blogList = this.selectAll(null);
             JSONArray tagsArr = JSONUtil.parseArray(tags);
             for (Object tag : tagsArr) {
                 String tagStr = tag.toString();
-                //筛选出包含当前博客标签的其他博客的博客列表
-                blogSet.addAll(blogList.stream().filter(b -> b.getTags()
-                        .contains(tagStr)&& !blogId.equals(b.getId())).collect(Collectors.toSet()));
+                // 筛选出包含当前博客标签的其他博客的博客列表
+                // blogSet.addAll(blogList.stream().filter(b -> b.getTags()
+                // .contains(tagStr)&& !blogId.equals(b.getId())).collect(Collectors.toSet()));
+                // 添加null检查
+                blogSet.addAll(blogList.stream()
+                        .filter(b -> b != null && b.getTags() != null) // 添加空值检查
+                        .filter(b -> b.getTags().contains(tagStr) && !blogId.equals(b.getId()))
+                        .collect(Collectors.toSet()));
             }
         }
         blogSet = blogSet.stream().limit(5).collect(Collectors.toSet());
-        blogSet.forEach(b->{
+        blogSet.forEach(b -> {
             int likesCount = likesService.selectByFidAndModule(b.getId(), LikesModuleEnum.BLOG.getValue());
             b.setLikesCount(likesCount);
         });
+        System.out.println("Recommend blogs for blogId " + blogId + ": " + JSONUtil.toJsonStr(blogSet));
         return blogSet;
     }
 }
