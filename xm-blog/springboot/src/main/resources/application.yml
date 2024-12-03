@@ -1,6 +1,9 @@
 server:
   port: 9090
 
+app:
+  file:
+    upload-path: /Users/peixinxiao/code/blog/xm-blog/files/ # 上传文件的路径
 # 数据库配置
 spring:
   datasource:

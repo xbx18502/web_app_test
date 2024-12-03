@@ -56,7 +56,7 @@
         <div class="card" style="margin-bottom: 10px">
           <div style="display: flex; align-items: baseline;color: #8c939d;padding-bottom: 10px;border-bottom: 1px solid">
             <div style="font-size: 19px;flex: 1">blog list</div>
-            <div style="font-size: 12px; color: #8c939d;cursor: pointer;"@click="refreshTop"><i class="el-icon-refresh"></i>refresh</div>
+            <div style="font-size: 12px; color: #8c939d;cursor: pointer;" @click="refreshTop"><i class="el-icon-refresh"></i>refresh</div>
           </div>
           <div style="margin-top: 10px">
             <div v-for="item in showList" :key="item.id" style="margin-bottom: 6px" class="line1">

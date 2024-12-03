@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.List;
@@ -23,8 +25,23 @@ import java.util.List;
 public class FileController {
 
     // 文件上传存储路径
-    private static final String filePath = System.getProperty("user.dir") + "/files/";
+    // private static final String filePathDefault = System.getProperty("user.dir") + "/files/";
+    @Value("${app.file.upload-path}")
+    private String filePathFromApplicationYml;
 
+    private static final String filePathDefault = new File(System.getProperty("user.dir")).getParent() + "/files/";
+    private String filePath; 
+    @PostConstruct
+    private void init() {
+        if (StrUtil.isNotEmpty(filePathFromApplicationYml)) {
+            filePath = filePathFromApplicationYml;
+            System.out.println("Using configured path: " + filePath);
+        } else {
+            filePath = filePathDefault;
+            System.out.println("Using default path: " + filePath);
+        }
+        
+    }
     @Value("${server.port:9090}")
     private String port;
 
@@ -96,11 +113,15 @@ public class FileController {
             if (StrUtil.isNotEmpty(flag)) {
                 response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(flag, "UTF-8"));
                 response.setContentType("application/octet-stream");
+                System.out.println("FileController: "+filePath+flag);
                 byte[] bytes = FileUtil.readBytes(filePath + flag);
                 os = response.getOutputStream();
                 os.write(bytes);
                 os.flush();
                 os.close();
+            }
+            else {
+                System.out.println("Flag is empty"); // Add else case log
             }
         } catch (Exception e) {
             System.out.println("文件下载失败");
