@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import org.springframework.beans.factory.annotation.Value;
 /**
  * 活动业务处理
  **/
@@ -19,6 +19,9 @@ public class ActivityService {
 
     @Resource
     private ActivityMapper activityMapper;
+
+    @Value("${ip:216.238.80.124}")
+    private String ip;
 
     /**
      * 新增
@@ -79,6 +82,13 @@ public class ActivityService {
      */
     public List<Activity> selectTop() {
         List<Activity> activityList = this.selectAll(null);
+        for(Activity a : activityList){
+            String cover = a.getCover();
+            if (cover != null && cover.contains("localhost")) {
+                cover = cover.replace("localhost", ip);
+                a.setCover(cover);
+            }
+        }
         activityList = activityList.stream().sorted((b1,b2)->b2.getReadCount()
                 .compareTo(b1.getReadCount())).limit(2).collect(Collectors.toList());
         return activityList;

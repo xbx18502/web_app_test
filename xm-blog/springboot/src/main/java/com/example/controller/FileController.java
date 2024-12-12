@@ -45,7 +45,7 @@ public class FileController {
     @Value("${server.port:9090}")
     private String port;
 
-    @Value("${ip:localhost}")
+    @Value("${ip:216.238.80.124}")
     private String ip;
 
     /**
@@ -72,7 +72,8 @@ public class FileController {
         }
         String http = "http://" + ip + ":" + port + "/files/";
         return Result.success(http + flag + "-" + fileName);  //  http://localhost:9090/files/1697438073596-avatar.png
-    }
+        
+    }   
 
     /**
      * 富文本文件上传

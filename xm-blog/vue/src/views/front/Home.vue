@@ -4,14 +4,16 @@
 
       <div style="width: 150px" class="card">
         <div class="category-item" :class="{ 'category-item-active': item.name === current }"
-             v-for="item in categoryList" :key="item.id" @click="selectCategory(item.name)">{{ item.name }}</div>
+          v-for="item in categoryList" :key="item.id" @click="selectCategory(item.name)">{{ item.name }}</div>
       </div>
 
       <div style="flex: 1;">
         <div class="card" style="min-height: 80vh">
           <div class="blog-box" v-for="item in tableData" :key="item.id" v-if="total > 0">
             <div style="flex: 1; width: 0">
-              <a :href="'/front/blogDetail?blogId=' + item.id" ><div class="blog-title" >{{ item.title }}</div></a>
+              <a :href="'/front/blogDetail?blogId=' + item.id">
+                <div class="blog-title">{{ item.title }}</div>
+              </a>
               <div class="line1" style="color: #666; margin-bottom: 10px; font-size: 13px">{{ item.descr }}</div>
               <div style="display: flex">
                 <div style="flex: 1; font-size: 13px">
@@ -20,7 +22,8 @@
                   <span style="color: #666"><i class="el-icon-like"></i> {{ item.likesCount }}</span>
                 </div>
                 <div style="width: fit-content">
-                    <el-tag v-for="item in JSON.parse(item.tags || '[]')" :key="item" type="primary" style="margin-right: 5px">{{item}}</el-tag>
+                  <el-tag v-for="item in JSON.parse(item.tags || '[]')" :key="item" type="primary"
+                    style="margin-right: 5px">{{ item }}</el-tag>
                 </div>
               </div>
             </div>
@@ -28,17 +31,12 @@
               <img style="max-width: 100%; max-height: 100%; border-radius: 5px;" :src="item.cover" alt="">
             </div>
           </div>
-          <div v-if="total === 0" style="padding: 20px 0; text-align: center; font-size: 16px; color: #666">no data</div>
+          <div v-if="total === 0" style="padding: 20px 0; text-align: center; font-size: 16px; color: #666">no data
+          </div>
 
           <div style="margin-top: 10px" v-if="total">
-            <el-pagination
-                background
-                @current-change="handleCurrentChange"
-                :current-page="pageNum"
-                :page-sizes="[5, 10, 20]"
-                :page-size="pageSize"
-                layout="total, prev, pager, next"
-                :total="total">
+            <el-pagination background @current-change="handleCurrentChange" :current-page="pageNum"
+              :page-sizes="[5, 10, 20]" :page-size="pageSize" layout="total, prev, pager, next" :total="total">
             </el-pagination>
           </div>
         </div>
@@ -51,42 +49,47 @@
       <div style="width: 260px">
         <div class="card" style="margin-bottom: 10px;">
           <div style="font-size: 22px ; font-weight: bold; margin-bottom: 10px">welcome! >_< </div>
-          <a href="/front/person"><div>Write a blog now</div></a>
-        </div>
-        <div class="card" style="margin-bottom: 10px">
-          <div style="display: flex; align-items: baseline;color: #8c939d;padding-bottom: 10px;border-bottom: 1px solid">
-            <div style="font-size: 19px;flex: 1">blog list</div>
-            <div style="font-size: 12px; color: #8c939d;cursor: pointer;" @click="refreshTop"><i class="el-icon-refresh"></i>refresh</div>
+              <a href="/front/person">
+                <div>Write a blog now</div>
+              </a>
           </div>
-          <div style="margin-top: 10px">
-            <div v-for="item in showList" :key="item.id" style="margin-bottom: 6px" class="line1">
-              <span style="width: 20px;display: inline-block; text-align: right;margin-right: 10px">
-                <span style="color: orangered" v-if="item.index===1">{{item.index}}</span>
-                <span style="color: gold" v-else-if="item.index===2">{{item.index}}</span>
-                <span style="color: blueviolet" v-else-if="item.index===3">{{item.index}}</span>
-                <span style="color: green" v-else-if="item.index===4">{{item.index}}</span>
-                <span style="color: #8c939d" v-else>{{item.index}}</span>
-              </span>
-              <span style="color: #8c939d;">{{item.title}}</span>
+          <div class="card" style="margin-bottom: 10px">
+            <div
+              style="display: flex; align-items: baseline;color: #8c939d;padding-bottom: 10px;border-bottom: 1px solid">
+              <div style="font-size: 19px;flex: 1">blog list</div>
+              <div style="font-size: 12px; color: #8c939d;cursor: pointer;" @click="refreshTop"><i
+                  class="el-icon-refresh"></i>refresh</div>
             </div>
+            <div style="margin-top: 10px">
+              <div v-for="item in showList" :key="item.id" style="margin-bottom: 6px" class="line1">
+                <span style="width: 20px;display: inline-block; text-align: right;margin-right: 10px">
+                  <span style="color: orangered" v-if="item.index === 1">{{ item.index }}</span>
+                  <span style="color: gold" v-else-if="item.index === 2">{{ item.index }}</span>
+                  <span style="color: blueviolet" v-else-if="item.index === 3">{{ item.index }}</span>
+                  <span style="color: green" v-else-if="item.index === 4">{{ item.index }}</span>
+                  <span style="color: #8c939d" v-else>{{ item.index }}</span>
+                </span>
+                <span style="color: #8c939d;">{{ item.title }}</span>
+              </div>
 
+            </div>
+          </div>
+
+          <div style="margin-bottom: 10px">
+            <div v-for="item in topActivityList" :key="item.id" style="margin-bottom: 10px">
+              <a :href="'/front/activityDetail?activityId=' + item.id" target="_blank"><img :src="item.cover" alt=""
+                  style="width: 100%;border-radius: 5px"></a>
+            </div>
+          </div>
+
+          <div style="line-height: 30px; color: #8c939d;padding: 0 10px">
+            <div>email： xbx18502@gmail.com</div>
+            <div>tel： 010-83434395</div>
           </div>
         </div>
 
-        <div style="margin-bottom: 10px">
-          <div v-for="item in topActivityList" :key="item.id" style="margin-bottom: 10px">
-            <a :href="'/front/activityDetail?activityId='  + item.id" target="_blank"><img :src="item.cover" alt="" style="width: 100%;border-radius: 5px"></a>
-          </div>
-        </div>
-
-        <div style="line-height: 30px; color: #8c939d;padding: 0 10px">
-          <div>email： xbx18502@gmail.com</div>
-          <div>tel： 010-83434395</div>
-        </div>
       </div>
-
     </div>
-  </div>
 </template>
 
 <script>
@@ -150,7 +153,7 @@ export default {
       // 请求分类的数据
       this.$request.get('/category/selectAll').then(res => {
         this.categoryList = res.data || []
-        this.categoryList.unshift({name: 'All blogs'})
+        this.categoryList.unshift({ name: 'All blogs' })
       })
     },
     loadBlogs(pageNum) {
@@ -162,8 +165,22 @@ export default {
           categoryName: this.current === 'All blogs' ? null : this.current,
         }
       }).then(res => {
-        this.tableData = res.data?.list
-        this.total = res.data?.total
+        this.tableData = res.data?.list || [] // 添加默认空数组
+        this.total = res.data?.total || 0
+
+        // 处理无封面的情况
+        this.tableData = this.tableData.map(item => {
+          if (!item.cover) {
+            console.log("cover is null for blog:", item.title)
+            // item.cover = '/default-cover.jpg' // 设置默认封面
+          }
+          else{
+            console.log("cover is", item.cover,item.title)
+          }
+          return item
+        })
+      }).catch(err => {
+        console.error('Failed to load blogs:', err)
       })
     },
     handleCurrentChange(pageNum) {
@@ -180,6 +197,7 @@ export default {
   font-size: 16px;
   cursor: pointer;
 }
+
 .category-item-active {
   background-color: #1890ff;
   color: #fff;
@@ -192,18 +210,22 @@ export default {
   padding: 10px 0;
   border-bottom: 1px solid #ddd;
 }
+
 .blog-box:first-child {
   padding-top: 0;
 }
+
 .blog-title {
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 10px;
   cursor: pointer;
 }
+
 .blog-title:hover {
   color: #ce0e0e;
 }
+
 a {
   color: #333333;
 }

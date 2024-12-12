@@ -13,6 +13,8 @@ import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -35,6 +37,9 @@ public class BlogService {
 
     @Resource
     CollectService collectService;
+
+    @Value("${ip:216.238.80.124}")
+    private String ip;
 
     /**
      * 新增
@@ -108,6 +113,12 @@ public class BlogService {
         for (Blog b : list) {
             int likesCount = likesService.selectByFidAndModule(b.getId(), LikesModuleEnum.BLOG.getValue());
             b.setLikesCount(likesCount);
+                    // 替换 'localhost' 为配置的 ip
+            String cover = b.getCover();
+            if (cover != null && cover.contains("localhost")) {
+                cover = cover.replace("localhost", ip);
+                b.setCover(cover);
+            }
         }
         return PageInfo.of(list);
     }
