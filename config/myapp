@@ -1,0 +1,52 @@
+# server {
+#     listen 80;
+#     server_name 216.238.80.124;
+
+#     location / {
+#         proxy_pass http://localhost:8080;  # 假设 Vue 开发服务器运行在 8080 端口
+#         proxy_http_version 1.1;
+#         proxy_set_header Upgrade $http_upgrade;
+#         proxy_set_header Connection 'upgrade';
+#         proxy_set_header Host $host;
+#         proxy_cache_bypass $http_upgrade;
+#     }
+# }
+
+server {
+    listen 80;
+    server_name 216.238.80.124;  # 替换为您的实际域名
+
+    # 前端静态文件的根目录
+    root /home/xiao/web_app_test/xm-blog/vue/dist;
+    index index.html;
+
+    # 处理前端路由
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # location /files {
+    #     alias /home/xiao/web_app_test/xm-blog/files/;
+    # }
+
+
+    # location ~ ^/(login|front|user|products) {
+    #     proxy_pass 'http://216.238.80.124:9090';
+    #     proxy_set_header Host $host;
+    #     proxy_set_header X-Real-IP $remote_addr;
+    #     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    #     proxy_set_header X-Forwarded-Proto $scheme;
+    # }
+
+    # 处理静态资源
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+        expires max;
+        add_header Cache-Control "public, max-age=31536000";
+    }
+
+    # 错误页面
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/html;
+    }
+}

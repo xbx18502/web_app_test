@@ -1,0 +1,18 @@
+[Unit]
+Description=My Spring Boot Application
+After=network.target
+
+[Service]
+User=root
+# 如果需要，可以设置环境变量
+Environment=SPRING_PROFILES_ACTIVE=prod
+ExecStart=/usr/bin/java -jar /home/xiao/web_app_test/xm-blog/springboot/target/springboot-0.0.1-SNAPSHOT.jar --spring.config.location=/home/xiao/springboot-project/application.yml
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=myapp.service
+
+[Install]
+WantedBy=multi-user.target
