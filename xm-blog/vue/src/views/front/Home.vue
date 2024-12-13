@@ -28,7 +28,7 @@
               </div>
             </div>
             <div style="width: 150px; height: 80px; display: flex; align-items: center; justify-content: center;">
-              <img style="max-width: 100%; max-height: 100%; border-radius: 5px;" :src="item.cover" alt="">
+              <img style="max-width: 100%; max-height: 100%; border-radius: 5px;" :src="item.imageSrc" alt="">
             </div>
           </div>
           <div v-if="total === 0" style="padding: 20px 0; text-align: center; font-size: 16px; color: #666">no data
@@ -77,7 +77,7 @@
 
           <div style="margin-bottom: 10px">
             <div v-for="item in topActivityList" :key="item.id" style="margin-bottom: 10px">
-              <a :href="'/front/activityDetail?activityId=' + item.id" target="_blank"><img :src="item.cover" alt=""
+              <a :href="'/front/activityDetail?activityId=' + item.id" target="_blank"><img :src="item.imageSrc" alt=""
                   style="width: 100%;border-radius: 5px"></a>
             </div>
           </div>
@@ -98,7 +98,7 @@
 // if want to open a new page when click on blog
 // <a :href="'/front/blogDetail?blogId=' + item.id" target="_blank"><div class="blog-title" >{{ item.title }}</div></a>
 import Footer from "@/components/Footer.vue";
-
+import axios from 'axios';
 export default {
   components: {
     Footer
@@ -116,6 +116,7 @@ export default {
       showList: [], //content of blog list being displayed
       lastIndex: 0,
       topActivityList: [],
+      imageCache: {},
     }
   },
   mounted() {
@@ -130,7 +131,16 @@ export default {
     loadTopActivity() {
       this.$request.get('/activity/selectTop').then(res => {
         this.topActivityList = res.data || []
-      })
+        // 为每个 item 初始化 imageSrc，并调用 fetchImage
+        this.topActivityList.forEach(item => {
+          console.log("activity cover :",item.cover)
+          this.$set(item, 'imageSrc', ''); // 确保 imageSrc 是响应式的
+          this.fetchImage(item);
+        })
+      }).catch(err => {
+        console.error('Failed to load activities:', err)
+      });
+
     },
     refreshTop() {
       this.$request.get('/blog/selectTop').then(res => {
@@ -165,26 +175,52 @@ export default {
           categoryName: this.current === 'All blogs' ? null : this.current,
         }
       }).then(res => {
-        this.tableData = res.data?.list || [] // 添加默认空数组
-        this.total = res.data?.total || 0
+        this.tableData = res.data?.list || [];
+        this.total = res.data?.total || 0;
 
-        // 处理无封面的情况
-        this.tableData = this.tableData.map(item => {
-          if (!item.cover) {
-            console.log("cover is null for blog:", item.title)
-            // item.cover = '/default-cover.jpg' // 设置默认封面
-          }
-          else{
-            console.log("cover is", item.cover,item.title)
-          }
-          return item
-        })
-      }).catch(err => {
-        console.error('Failed to load blogs:', err)
+        // 为每个 item 初始化 imageSrc，并调用 fetchImage
+        this.tableData.forEach(item => {
+          this.$set(item, 'imageSrc', ''); // 确保 imageSrc 是响应式的
+          this.fetchImage(item);
+        });
       })
+        .catch(err => {
+          console.error('Failed to load blogs:', err)
+        })
     },
     handleCurrentChange(pageNum) {
       this.loadBlogs(pageNum)
+    },
+    fetchImage(item) {
+      const url = item.cover;
+      if (this.imageCache[url]) {
+        // 如果图片已缓存，直接使用缓存的 URL
+        item.imageSrc = this.imageCache[url];
+      } else {
+        // 先设置占位符，防止重复请求
+        this.imageCache[url] = '';
+        item.imageSrc = ''; // 可设置为占位图片的路径
+        // 使用 request.js 发起请求获取图片数据
+        this.$request.get(url, {
+          responseType: 'blob',
+        }).then(response => {
+          // 将 Blob 数据转换为可用的图片 URL
+          const imageUrl = URL.createObjectURL(response);
+          // 缓存图片 URL
+          this.$set(this.imageCache, url, imageUrl);
+          // 更新 item 的 imageSrc 属性
+          item.imageSrc = imageUrl;
+        }).catch(error => {
+          console.error('获取图片失败：', error);
+          // 设置默认图片
+          item.imageSrc = '/default-cover.jpg';
+        });
+      }
+    },
+    beforeDestroy() {
+      for (const url in this.imageCache) {
+        URL.revokeObjectURL(this.imageCache[url]);
+      }
     },
   }
 }
