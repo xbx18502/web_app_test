@@ -23,6 +23,13 @@ spring:
         max-wait: -1
         max-idle: 8
         min-idle: 0
+  cache:
+    type: redis
+    redis:
+      key-prefix: xm-blog
+      time-to-live: 60000
+      cache-null-values: false
+      use-key-prefix: true
   servlet:
     multipart:
       max-file-size: 100MB
