@@ -4,18 +4,25 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
+import lombok.extern.slf4j.Slf4j;
+
 import com.example.common.enums.LikesModuleEnum;
 import com.example.common.enums.RoleEnum;
 import com.example.entity.*;
 import com.example.mapper.BlogMapper;
 import com.example.mapper.CollectMapper;
+import com.example.repository.BlogRepository;
 import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -41,9 +48,13 @@ public class BlogService {
     @Value("${ip:216.238.80.124}")
     private String ip;
 
+    // @Autowired
+    // private BlogRepository blogRepository;
+
     /**
      * 新增
      */
+    // @CacheEvict(value = "blog", allEntries = true)    // 清除缓存
     public void add(Blog blog) {
         blog.setDate(DateUtil.today());
         Account currentUser = TokenUtils.getCurrentUser();
@@ -56,6 +67,7 @@ public class BlogService {
     /**
      * 删除
      */
+    @CacheEvict(value = "blog", key = "#id")    // 清除缓存
     public void deleteById(Integer id) {
         blogMapper.deleteById(id);
     }
@@ -72,34 +84,51 @@ public class BlogService {
     /**
      * 修改
      */
+    @CachePut(value = "blog", key = "#blog.id")    // 清除缓存
     public void updateById(Blog blog) {
         blogMapper.updateById(blog);
     }
 
+    // @Cacheable(value = "blog_basic", key = "#id")
+    public Blog getBasicBlog(Integer id) {
+        return blogMapper.selectById(id);
+    }
+
+    // @Cacheable(value = "blog_likes", key = "#id")
+    public int getLikesCount(Integer id) {
+        return likesService.selectByFidAndModule(id, LikesModuleEnum.BLOG.getValue());
+    }
+    
+    // @Cacheable(value = "blog_collects", key = "#id")
+    public int getCollectCount(Integer id) {
+        return collectService.selectByFidAndModule(id, LikesModuleEnum.BLOG.getValue());
+    }
     /**
      * 根据ID查询
      */
+    @Cacheable(value = "blog", key = "#id")
     public Blog selectById(Integer id) {
-        Blog blog = blogMapper.selectById(id);
+        Blog blog = getBasicBlog(id);
+        if (blog == null) return null;
+        
         User user = userService.selectById(blog.getUserId());
-        blog.setUser(user); // 设置作者信息
-        // 查询当前博客的点赞数据
-        int likesCount = likesService.selectByFidAndModule(id, LikesModuleEnum.BLOG.getValue());
-        blog.setLikesCount(likesCount);
+        blog.setUser(user);
+        
+        blog.setLikesCount(getLikesCount(id));
         Likes userLikes = likesService.selectUserLikes(id, LikesModuleEnum.BLOG.getValue());
         blog.setUserLike(userLikes != null);
-
-        // 查询当前博客的收藏数据
-        int collectCount = collectService.selectByFidAndModule(id, LikesModuleEnum.BLOG.getValue());
-        blog.setCollectCount(collectCount);
+        
+        blog.setCollectCount(getCollectCount(id));
         Collect userCollect = collectService.selectUserCollect(id, LikesModuleEnum.BLOG.getValue());
         blog.setUserCollect(userCollect != null);
+        
         return blog;
     }
 
     /**
      * 查询所有
      */
+    @Cacheable(value = "blog_all", key = "#root.methodName")
     public List<Blog> selectAll(Blog blog) {
         return blogMapper.selectAll(blog);
     }

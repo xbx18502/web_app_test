@@ -7,5 +7,9 @@ xm-blog/vue/node_modules/
 
 *.jar
 *.jar.original
-
+# 忽略 dist 目录
 /xm-blog/vue/dist/
+
+# ignore java class files
+*.class
+**/*.class

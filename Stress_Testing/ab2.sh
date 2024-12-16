@@ -18,10 +18,10 @@ echo "token: $TOKEN" > headers.txt
 echo "Content-Type: application/json" >> headers.txt
 
 # 3. Run ab with token
-ab -n 8000 -c 100 \
+ab -n 1000 -c 100 \
    -H "token: $TOKEN" \
    -H "Content-Type: application/json" \
-   http://127.0.0.1:9090/blog/selectAll
+   http://127.0.0.1:9090/blog/selectById/21
 
 # 4. Cleanup
 rm headers.txt

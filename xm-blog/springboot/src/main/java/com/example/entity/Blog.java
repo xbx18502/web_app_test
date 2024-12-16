@@ -2,12 +2,27 @@ package com.example.entity;
 
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import java.io.Serializable;
+
+
 /**
  * 博客信息
  */
-public class Blog {
+@Entity
+@Table(name = "blog")
+public class Blog implements Serializable {
 
     /** ID */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     /** 标题 */
     private String title;
@@ -96,7 +111,6 @@ public class Blog {
         this.categoryName = categoryName;
     }
 
-
     public Integer getCategoryId() {
         return categoryId;
     }
@@ -179,8 +193,10 @@ public class Blog {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Blog blog = (Blog) o;
         return Objects.equals(id, blog.id);
     }
@@ -189,7 +205,5 @@ public class Blog {
     public int hashCode() {
         return Objects.hashCode(id);
     }
-
-
 
 }

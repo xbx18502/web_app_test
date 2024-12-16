@@ -1,6 +1,6 @@
 package com.example.entity;
 
-public class User extends Account {
+public class User extends Account implements java.io.Serializable {
 
     private Integer id;
     private String username;
