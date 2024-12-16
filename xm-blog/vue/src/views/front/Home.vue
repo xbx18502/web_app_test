@@ -62,16 +62,17 @@
             </div>
             <div style="margin-top: 10px">
               <div v-for="item in showList" :key="item.id" style="margin-bottom: 6px" class="line1">
-                <span style="width: 20px;display: inline-block; text-align: right;margin-right: 10px">
-                  <span style="color: orangered" v-if="item.index === 1">{{ item.index }}</span>
-                  <span style="color: gold" v-else-if="item.index === 2">{{ item.index }}</span>
-                  <span style="color: blueviolet" v-else-if="item.index === 3">{{ item.index }}</span>
-                  <span style="color: green" v-else-if="item.index === 4">{{ item.index }}</span>
-                  <span style="color: #8c939d" v-else>{{ item.index }}</span>
-                </span>
-                <span style="color: #8c939d;">{{ item.title }}</span>
+                <a :href="'/front/blogDetail?blogId=' + item.id">
+                  <span style="width: 20px;display: inline-block; text-align: right;margin-right: 10px">
+                    <span style="color: orangered" v-if="item.index === 1">{{ item.index }}</span>
+                    <span style="color: gold" v-else-if="item.index === 2">{{ item.index }}</span>
+                    <span style="color: blueviolet" v-else-if="item.index === 3">{{ item.index }}</span>
+                    <span style="color: green" v-else-if="item.index === 4">{{ item.index }}</span>
+                    <span style="color: #8c939d" v-else>{{ item.index }}</span>
+                  </span>
+                  <span style="color: #8c939d;">{{ item.title }}</span>
+                </a>
               </div>
-
             </div>
           </div>
 
@@ -133,7 +134,7 @@ export default {
         this.topActivityList = res.data || []
         // 为每个 item 初始化 imageSrc，并调用 fetchImage
         this.topActivityList.forEach(item => {
-          console.log("activity cover :",item.cover)
+          console.log("activity cover :", item.cover)
           this.$set(item, 'imageSrc', ''); // 确保 imageSrc 是响应式的
           this.fetchImage(item);
         })

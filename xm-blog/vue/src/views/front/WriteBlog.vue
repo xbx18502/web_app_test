@@ -24,6 +24,20 @@
                 </el-select>
             </el-form-item>
 
+            <el-form-item label="标签" prop="tags">
+                <el-select v-model="tagsArr" multiple filterable allow-create default-first-option style="width: 100%">
+                    <el-option value="后端"></el-option>
+                    <el-option value="Java"></el-option>
+                    <el-option value="面试"></el-option>
+                    <el-option value="Vue"></el-option>
+                    <el-option value="前端"></el-option>
+                    <el-option value="大数据"></el-option>
+                    <el-option value="算法"></el-option>
+                    <el-option value="程序员"></el-option>
+                    <el-option value="小白"></el-option>
+                </el-select>
+            </el-form-item>
+
             <el-form-item label="Content" prop="content">
                 <!-- Add editor container -->
                 <div id="editor-container"></div>
