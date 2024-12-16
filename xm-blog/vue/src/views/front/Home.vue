@@ -213,7 +213,7 @@ export default {
         }).catch(error => {
           console.error('获取图片失败：', error);
           // 设置默认图片
-          item.imageSrc = '/default-cover.jpg';
+          item.imageSrc = '@/assets/imgs/logo.png';
         });
       }
     },
