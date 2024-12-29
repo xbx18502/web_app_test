@@ -4,6 +4,8 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 
 import com.example.common.enums.LikesModuleEnum;
@@ -15,6 +17,8 @@ import com.example.repository.BlogRepository;
 import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +35,7 @@ import java.util.stream.Collectors;
  * 博客信息业务处理
  **/
 @Service
+@Slf4j
 public class BlogService {
 
     @Resource
@@ -47,6 +52,8 @@ public class BlogService {
 
     @Value("${ip:216.238.80.124}")
     private String ip;
+
+    
 
     // @Autowired
     // private BlogRepository blogRepository;
@@ -89,24 +96,24 @@ public class BlogService {
         blogMapper.updateById(blog);
     }
 
-    // @Cacheable(value = "blog_basic", key = "#id")
+    //@Cacheable(value = "blog_basic", key = "#id")
     public Blog getBasicBlog(Integer id) {
         return blogMapper.selectById(id);
     }
 
-    // @Cacheable(value = "blog_likes", key = "#id")
+    //@Cacheable(value = "blog_likes", key = "#id")
     public int getLikesCount(Integer id) {
         return likesService.selectByFidAndModule(id, LikesModuleEnum.BLOG.getValue());
     }
     
-    // @Cacheable(value = "blog_collects", key = "#id")
+    //@Cacheable(value = "blog_collects", key = "#id")
     public int getCollectCount(Integer id) {
         return collectService.selectByFidAndModule(id, LikesModuleEnum.BLOG.getValue());
     }
     /**
      * 根据ID查询
      */
-    @Cacheable(value = "blog", key = "#id")
+    @Cacheable(value = "blog", key = "#id", unless = "#result == null")
     public Blog selectById(Integer id) {
         Blog blog = getBasicBlog(id);
         if (blog == null) return null;

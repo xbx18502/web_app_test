@@ -50,4 +50,13 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+  metrics:
+    tags:
+      application: xm-blog
+
 ip: 216.238.80.124
