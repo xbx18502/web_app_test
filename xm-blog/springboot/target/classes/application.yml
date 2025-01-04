@@ -7,6 +7,17 @@ app:
 # 数据库配置
 spring:
   datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 10
+      auto-commit: true
+      connection-timeout: 20000
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      connection-test-query: SELECT 1
+      pool-name: HikariCP
+      validation-timeout: 5000
     driver-class-name: com.mysql.cj.jdbc.Driver
     # username: root   #你本地的数据库用户名
     # password: 19991210 #你本地的数据库密码
