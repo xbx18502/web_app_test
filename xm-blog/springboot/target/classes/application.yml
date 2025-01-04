@@ -8,10 +8,15 @@ app:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root   #你本地的数据库用户名
-    password: 19991210 #你本地的数据库密码
-    url: jdbc:mysql://localhost:3306/xm-blog?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2b8&allowPublicKeyRetrieval=true
-      # Add Redis configuration
+    # username: root   #你本地的数据库用户名
+    # password: 19991210 #你本地的数据库密码
+    # url: jdbc:mysql://localhost:3306/xm-blog?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2b8&allowPublicKeyRetrieval=true
+    
+    username: admin
+    password: Xbx123456# #你本地的数据库密码
+    url: jdbc:mysql://database-1.c5i6wwwkqmm9.ap-northeast-1.rds.amazonaws.com:3306/xm-blog?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2b8&allowPublicKeyRetrieval=true
+      
+    # Add Redis configuration
   redis:
     host: localhost
     port: 6379
@@ -54,7 +59,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,metrics,prometheus
+        include: '*'
   metrics:
     tags:
       application: xm-blog

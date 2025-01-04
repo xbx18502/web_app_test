@@ -44,6 +44,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         // 2. 开始执行认证
         if (ObjectUtil.isEmpty(token)) {
             throw new CustomException(ResultCodeEnum.TOKEN_INVALID_ERROR);
+           
         }
         Account account = null;
         try {
