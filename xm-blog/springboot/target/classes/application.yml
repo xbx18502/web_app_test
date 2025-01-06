@@ -43,7 +43,7 @@ spring:
     type: redis
     redis:
       key-prefix: xm-blog
-      time-to-live: 60000
+      # time-to-live: 60000
       cache-null-values: false
       use-key-prefix: true
   servlet:
