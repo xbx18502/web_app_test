@@ -51,6 +51,13 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
 
+  jpa:
+    open-in-view: false
+
+  web:
+    resources:
+      add-mappings: false
+
 # 配置mybatis实体和xml映射
 mybatis:
   mapper-locations: classpath:mapper/*.xml
