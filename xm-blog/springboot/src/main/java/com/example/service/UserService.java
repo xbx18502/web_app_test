@@ -9,6 +9,7 @@ import com.example.entity.Admin;
 import com.example.entity.User;
 import com.example.exception.CustomException;
 import com.example.mapper.UserMapper;
+import com.example.utils.PasswordUtils;
 import com.example.utils.TokenUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -77,12 +78,16 @@ public class UserService {
         if (ObjectUtil.isNull(dbUser)) {
             throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
         }
-        if (!account.getPassword().equals(dbUser.getPassword())) {
+        // if (!account.getPassword().equals(dbUser.getPassword())) {
+        //     throw new CustomException(ResultCodeEnum.USER_ACCOUNT_ERROR);
+        // }
+        if (!PasswordUtils.matches(account.getPassword(), dbUser.getPassword())) {
             throw new CustomException(ResultCodeEnum.USER_ACCOUNT_ERROR);
         }
         // 生成token
         String tokenData = dbUser.getId() + "-" + RoleEnum.USER.name();
-        String token = TokenUtils.createToken(tokenData, dbUser.getPassword());
+        String hashedPassword = dbUser.getPassword(); // Already hashed in DB
+        String token = TokenUtils.createToken(tokenData, hashedPassword);
         dbUser.setToken(token);
         return dbUser;
     }
@@ -92,7 +97,9 @@ public class UserService {
      */
     public void register(Account account) {
         User user = new User();
+        String encodedPassword = PasswordUtils.encodePassword(account.getPassword());
         BeanUtils.copyProperties(account, user);
+        user.setPassword(encodedPassword);
         this.add(user);
     }
 

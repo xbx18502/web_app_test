@@ -134,6 +134,10 @@ export default {
 
           this.load()  // 重新加载数据
         }
+        else{
+          console.log('Error setting likes:', res)
+          this.$message.error('操作失败')
+        }
       })
     },
     setCollect() {
