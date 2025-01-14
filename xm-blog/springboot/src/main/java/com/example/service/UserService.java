@@ -88,7 +88,9 @@ public class UserService {
         String tokenData = dbUser.getId() + "-" + RoleEnum.USER.name();
         String hashedPassword = dbUser.getPassword(); // Already hashed in DB
         String token = TokenUtils.createToken(tokenData, hashedPassword);
+        String refreshToken = TokenUtils.createRefreshToken(tokenData, hashedPassword);
         dbUser.setToken(token);
+        dbUser.setRefreshToken(refreshToken);
         return dbUser;
     }
 

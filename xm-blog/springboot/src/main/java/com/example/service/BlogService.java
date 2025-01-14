@@ -164,9 +164,15 @@ public class BlogService {
      */
     public List<Blog> selectTop() {
         List<Blog> bloglist = this.selectAll(null);
-        bloglist = bloglist.stream().sorted((b1, b2) -> b2.getReadCount()
-                .compareTo(b1.getReadCount())).limit(10).collect(Collectors.toList());
-        return bloglist;
+        return bloglist.stream()
+            .filter(blog -> blog.getReadCount() != null)  // Filter out blogs with null readCount
+            .sorted((b1, b2) -> {
+                Integer count1 = b1.getReadCount() != null ? b1.getReadCount() : 0;
+                Integer count2 = b2.getReadCount() != null ? b2.getReadCount() : 0;
+                return count2.compareTo(count1);
+            })
+            .limit(10)
+            .collect(Collectors.toList());
     }
 
     public Set<Blog> selectRecommend(Integer blogId) {

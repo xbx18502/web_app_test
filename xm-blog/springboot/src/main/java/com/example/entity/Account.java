@@ -20,6 +20,8 @@ public class Account {
 
     private String token;
 
+    private String refreshToken;
+
     public Integer getId() {
         return id;
     }
@@ -80,5 +82,13 @@ public class Account {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }
