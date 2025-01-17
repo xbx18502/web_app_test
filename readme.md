@@ -13,6 +13,7 @@ Before proceeding, ensure you have the following installed on your system:
 
 - **Homebrew**: Package manager for macOS. [Install Homebrew](https://brew.sh/)
 - **MySQL**: Relational database management system.
+- **Redis**: In-memory data structure store. [Redis Documentation](https://redis.io/)
 - **Java Development Kit (JDK)**: Version 1.8
 - **Node.js and npm**: JavaScript runtime and package manager. [Download Node.js](https://nodejs.org/)
 - **Maven**: Build automation tool for Java projects. [Install Maven](https://maven.apache.org/install.html)
@@ -91,6 +92,64 @@ Set up the Spring Boot backend project to use JDK 1.8.
     <properties>
         <java.version>1.8</java.version>
     </properties>
+    ```
+
+### 4.5 Install and Configure Redis
+
+1. **Install Redis** (macOS):
+
+    ```bash
+    brew install redis
+    ```
+
+2. **Start Redis Server**:
+
+    ```bash
+    brew services start redis
+    ```
+
+3. **Verify Redis Installation**:
+
+    ```bash
+    redis-cli ping
+    ```
+
+    Should return: `PONG`
+
+4. **Configure Redis in Spring Boot**:
+
+    Update your `application.yml` with Redis configuration:
+
+    ```yaml
+    spring:
+      redis:
+        host: localhost
+        port: 6379
+        database: 0
+        timeout: 1000
+        lettuce:
+          pool:
+            max-active: 8
+            max-wait: -1
+            max-idle: 8
+            min-idle: 0
+      cache:
+        type: redis
+        redis:
+          key-prefix: xm-blog
+          cache-null-values: false
+          use-key-prefix: true
+    ```
+
+5. **Add Redis Dependencies**:
+
+    Add the following to your `pom.xml`:
+
+    ```xml
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
     ```
 
 ### 5. Edit `application.yml` for Database Connection
@@ -227,6 +286,18 @@ With both the Spring Boot backend and the Vue.js frontend running:
     - Check the console logs for any error messages.
     - Ensure that the Java version is set to 1.8.
     - Verify that all environment variables and configurations are correctly set.
+
+### Troubleshooting Redis
+
+- **Redis Connection Issues**:
+    - Ensure Redis server is running: `redis-cli ping`
+    - Check Redis service status: `brew services list`
+    - Restart Redis: `brew services restart redis`
+
+- **Redis Cache Not Working**:
+    - Verify Redis configuration in `application.yml`
+    - Check Spring Boot logs for Redis-related errors
+    - Ensure `@EnableCaching` annotation is present in your main application class
 
 ## Contributing
 
