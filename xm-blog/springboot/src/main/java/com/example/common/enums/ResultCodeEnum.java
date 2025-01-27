@@ -5,7 +5,7 @@ public enum ResultCodeEnum {
 
     PARAM_ERROR("400", "参数异常"),
     TOKEN_INVALID_ERROR("401", "无效的token"),
-    TOKEN_CHECK_ERROR("401", "token验证失败, 请重新登录"),
+    TOKEN_CHECK_ERROR("403", "token验证失败, 请重新登录"),
     REFRESH_TOKEN_INVALID_ERROR("402", "无效的refreshToken"),
     PARAM_LOST_ERROR("4001", "参数缺失"),
 

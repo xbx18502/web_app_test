@@ -11,17 +11,17 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LikesService {
 
     @Resource
     LikesMapper likesMapper;
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = "blog", key = "#likes.fid", beforeInvocation = false)
     public void set(Likes likes) {
-        
+        try{
         Account currentUser = TokenUtils.getCurrentUser();
         likes.setUserId(currentUser.getId());
         Likes dblLikes = likesMapper.selectUserLikes(likes);
@@ -33,7 +33,11 @@ public class LikesService {
             likesMapper.deleteById(dblLikes.getId());
         }
         // Cache will be evicted after successful transaction
-        
+    }
+    catch(Exception e){
+        throw e;
+
+    }
     }
     // @CacheEvict(value = "blog", key = "#likes.fid")
     // public void set(Likes likes) {

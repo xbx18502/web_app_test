@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.annotation.Resource;
 
 @Configuration
-public class WebConfig implements  WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer {
 
     @Resource
     private JwtInterceptor jwtInterceptor;
@@ -15,10 +15,24 @@ public class WebConfig implements  WebMvcConfigurer {
     // 加自定义拦截器JwtInterceptor，设置拦截规则
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(jwtInterceptor).addPathPatterns("/**")
+        registry.addInterceptor(jwtInterceptor)
+                .addPathPatterns("/**")
                 .excludePathPatterns("/")
                 .excludePathPatterns("/login")
                 .excludePathPatterns("/register")
-                .excludePathPatterns("/files/**");
+                .excludePathPatterns("/files/**")
+                .excludePathPatterns("/blog/selectById/*")
+                .excludePathPatterns("/blog/selectAll")
+                .excludePathPatterns("/blog/selectPage")
+                .excludePathPatterns("/blog/selectTop")
+                .excludePathPatterns("/blog/selectRecommend/*")
+                .excludePathPatterns("/files/**")
+                .excludePathPatterns("/category/selectById/*")
+                .excludePathPatterns("/category/selectAll")
+                .excludePathPatterns("/notice/selectById/*")
+                .excludePathPatterns("/notice/selectAll")
+                .excludePathPatterns("/notice/selectPage")
+                .excludePathPatterns("/activity/selectTop")
+                .excludePathPatterns("/activity/selectById/*");
     }
 }

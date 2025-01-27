@@ -5,14 +5,14 @@ body{
     padding: 5px 20px;
     color: #666;
     font-size: 12px;
-    background-color: #b9ffff;
+    background-color: #32a2a2;
 }
 .front-header {
     display: flex;
     height: 60px;
     line-height: 60px;
     border-bottom: 1px solid #eee;
-    background: #0066BC;
+    background: #768591;
 }
 .front-header-left {
     width: 310px;
@@ -63,7 +63,7 @@ body{
 }
 
 .el-menu{
-    background-color: #0066BC;
+    background-color: #768591;
 }
 
 .el-menu-item.is-active{

@@ -9,12 +9,57 @@ VueRouter.prototype.push = function push (location) {
   return originalPush.call(this, location).catch(err => err)
 }
 
+// const routes = [
+//   {
+//     path: '/',
+//     name: 'Manager',
+//     component: () => import('../views/Manager.vue'),
+//     redirect: '/front/home',  // 重定向到主页
+//     children: [
+//       { path: '403', name: 'NoAuth', meta: { name: '无权限' }, component: () => import('../views/manager/403') },
+//       { path: 'home', name: 'Home', meta: { name: '系统首页' }, component: () => import('../views/manager/Home') },
+//       { path: 'admin', name: 'Admin', meta: { name: '管理员信息' }, component: () => import('../views/manager/Admin') },
+//       { path: 'adminPerson', name: 'AdminPerson', meta: { name: '个人信息' }, component: () => import('../views/manager/AdminPerson') },
+//       { path: 'password', name: 'Password', meta: { name: '修改密码' }, component: () => import('../views/manager/Password') },
+//       { path: 'notice', name: 'Notice', meta: { name: '公告信息' }, component: () => import('../views/manager/Notice') },
+//       { path: 'user', name: 'User', meta: { name: 'user info' }, component: () => import('../views/manager/User') },
+//       { path: 'category', name: 'Category', meta: { name: 'blog category' }, component: () => import('../views/manager/Category') },
+//       { path: 'blog', name: 'Blog', meta: { name: 'blog info' }, component: () => import('../views/manager/Blog') },
+//       { path: 'activity', name: 'Activity', meta: { name: 'Activity info' }, component: () => import('../views/manager/Activity') },
+//     ]
+//   },
+//   {
+//     path: '/front',
+//     name: 'Front',
+//     component: () => import('../views/Front.vue'),
+//     children: [
+//       { path: 'home', name: 'FHome', meta: { name: '系统首页' }, component: () => import('../views/front/Home') },
+//       { path: 'person', name: 'Person', meta: { name: '个人信息' }, component: () => import('../views/front/Person') },
+//       { path: 'blogDetail', name: 'BlogDetail', meta: { name: 'BlogDetailPage' }, component: () => import('../views/front/BlogDetail') },
+//       { 
+//         path: 'write', 
+//         name: 'WriteBlog', 
+//         meta: { name: 'Write Blog' }, 
+//         component: () => import('../views/front/WriteBlog') 
+//       }
+//     ]
+//   },
+//   { path: '/login', name: 'Login', meta: { name: '登录' }, component: () => import('../views/Login.vue') },
+//   { path: '/register', name: 'Register', meta: { name: '注册' }, component: () => import('../views/Register.vue') },
+//   { path: '*', name: 'NotFound', meta: { name: '无法访问' }, component: () => import('../views/404.vue') },
+// ]
+
 const routes = [
   {
     path: '/',
+    name: 'Root',
+    component: () => import('../views/front/Home'),
+    redirect: '/front/home',  // 重定向到主页
+  },
+  {
+    path: '/manager',
     name: 'Manager',
     component: () => import('../views/Manager.vue'),
-    redirect: '/home',  // 重定向到主页
     children: [
       { path: '403', name: 'NoAuth', meta: { name: '无权限' }, component: () => import('../views/manager/403') },
       { path: 'home', name: 'Home', meta: { name: '系统首页' }, component: () => import('../views/manager/Home') },
@@ -32,6 +77,7 @@ const routes = [
     path: '/front',
     name: 'Front',
     component: () => import('../views/Front.vue'),
+    //redirect: '/front/home',  // 重定向到主页
     children: [
       { path: 'home', name: 'FHome', meta: { name: '系统首页' }, component: () => import('../views/front/Home') },
       { path: 'person', name: 'Person', meta: { name: '个人信息' }, component: () => import('../views/front/Person') },
@@ -49,29 +95,57 @@ const routes = [
   { path: '*', name: 'NotFound', meta: { name: '无法访问' }, component: () => import('../views/404.vue') },
 ]
 
+      
+
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
 
+// Public paths that don't require authentication
+const publicPaths = ['/login', '/register', '/front/home', '/', '/front']
+
 // 注：不需要前台的项目，可以注释掉该路由守卫
 // 路由守卫
-router.beforeEach((to ,from, next) => {
+
+router.beforeEach((to, from, next) => {
+  console.log('Route change:', {
+    to: to.path,
+    isPublic: publicPaths.includes(to.path)
+  });
   let user = JSON.parse(localStorage.getItem("xm-user") || '{}');
-  if (to.path === '/') {
-    if (user.role) {
-      if (user.role === 'USER') {
-        next('/front/home')
-      } else {
-        next('/home')
-      }
-    } else {
-      next('/login')
-    }
-  } else {
-    next()
+  
+  // Public paths
+  if (publicPaths.includes(to.path)) {
+    next();
+    return;
   }
+  
+  // Protected routes
+  // if (!user.token && !publicPaths.includes(to.path)) {
+  //   next('/register');
+  //   return;
+  // }
+  
+  next();
 })
+
+// router.beforeEach((to ,from, next) => {
+//   let user = JSON.parse(localStorage.getItem("xm-user") || '{}');
+//   if (to.path === '/') {
+//     if (user.role) {
+//       if (user.role === 'USER') {
+//         next('/front/home')
+//       } else {
+//         next('/home')
+//       }
+//     } else {
+//       next('/login')
+//     }
+//   } else {
+//     next()
+//   }
+// })
 
 export default router
