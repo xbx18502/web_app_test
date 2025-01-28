@@ -12,7 +12,7 @@ import java.util.List;
  * 博客分类前端操作接口
  **/
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/api/category")
 public class CategoryController {
 
     @Resource

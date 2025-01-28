@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 @RestController
-@RequestMapping("/collect")
+@RequestMapping("/api/collect")
 public class CollectController {
 
     @Resource

@@ -13,7 +13,7 @@ import java.util.List;
  * 活动前端操作接口
  **/
 @RestController
-@RequestMapping("/activity")
+@RequestMapping("/api/activity")
 public class ActivityController {
 
     @Resource

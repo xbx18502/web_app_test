@@ -3,7 +3,7 @@ import router from "@/router";
 
 // 创建可一个新的axios对象
 const request = axios.create({
-    baseURL: process.env.VUE_APP_BASEURL,   // 后端的接口地址  ip:port
+    baseURL: process.env.VUE_APP_BASEURL + "/api",   // 后端的接口地址  ip:port
     timeout: 30000                          // 30s请求超时
 })
 // 判断token是否过期

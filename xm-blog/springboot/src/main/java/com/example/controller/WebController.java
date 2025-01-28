@@ -66,7 +66,7 @@ public class WebController {
     // }
     // return Result.success(account);
     // }
-    @PostMapping("/login")
+    @PostMapping("/api/login")
     public Result login(@RequestBody Account account, HttpServletResponse response) {
         if (ObjectUtil.isEmpty(account.getUsername()) || ObjectUtil.isEmpty(account.getPassword())
                 || ObjectUtil.isEmpty(account.getRole())) {
@@ -97,7 +97,7 @@ public class WebController {
     /**
      * 注册
      */
-    @PostMapping("/register")
+    @PostMapping("/api/register")
     public Result register(@RequestBody Account account) {
         if (StrUtil.isBlank(account.getUsername()) || StrUtil.isBlank(account.getPassword())
                 || ObjectUtil.isEmpty(account.getRole())) {
@@ -114,7 +114,7 @@ public class WebController {
     /**
      * 修改密码
      */
-    @PutMapping("/updatePassword")
+    @PutMapping("/api/updatePassword")
     public Result updatePassword(@RequestBody Account account) {
         if (StrUtil.isBlank(account.getUsername()) || StrUtil.isBlank(account.getPassword())
                 || ObjectUtil.isEmpty(account.getNewPassword())) {
@@ -158,7 +158,7 @@ public class WebController {
         }
     }
 
-    @PostMapping("/refreshToken")
+    @PostMapping("/api/refreshToken")
     public Result refreshToken(HttpServletRequest request, HttpServletResponse response) {
         // 1. Get refresh token from cookie
         Cookie[] cookies = request.getCookies();

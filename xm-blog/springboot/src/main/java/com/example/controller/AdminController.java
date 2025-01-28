@@ -12,7 +12,7 @@ import java.util.List;
  * 管理员前端操作接口
  **/
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
 public class AdminController {
 
     @Resource

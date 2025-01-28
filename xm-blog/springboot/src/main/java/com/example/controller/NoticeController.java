@@ -12,7 +12,7 @@ import java.util.List;
  * 公告信息表前端操作接口
  **/
 @RestController
-@RequestMapping("/notice")
+@RequestMapping("/api/notice")
 public class NoticeController {
 
     @Resource

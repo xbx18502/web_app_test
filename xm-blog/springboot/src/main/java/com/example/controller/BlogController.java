@@ -14,7 +14,7 @@ import java.util.Set;
  * 博客信息前端操作接口
  **/
 @RestController
-@RequestMapping("/blog")
+@RequestMapping("/api/blog")
 public class BlogController {
 
     @Resource
