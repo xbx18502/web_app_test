@@ -3,7 +3,7 @@
 ## Introduction
 
 You can have a preview here:
-### 🌐 [**My Server**](http://216.238.80.124)   
+### 🌐 [**My Server**](http://13.231.250.135)   
 
 This guide provides step-by-step instructions to set up and launch the **XM Blog** application on your local machine. The application consists of a Spring Boot backend and a Vue.js frontend.
 
