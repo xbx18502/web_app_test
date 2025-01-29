@@ -1,11 +1,19 @@
 server:
   port: 9090
+  tomcat:
+    max-connections: 10000
+    max-threads: 200
+    uri-encoding: UTF-8
+    accept-count: 1000
+
 
 app:
   file:
     upload-path: /home/xiao/web_app_test/xm-blog/files/ # 上传文件的路径
 # 数据库配置
 spring:
+  config:
+    import: "classpath:/config.properties"
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
@@ -23,9 +31,9 @@ spring:
     # password: 19991210 #你本地的数据库密码
     # url: jdbc:mysql://localhost:3306/xm-blog?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2b8&allowPublicKeyRetrieval=true
     
-    username: admin
-    password: Xbx123456# #你本地的数据库密码
-    url: jdbc:mysql://database-1.c5i6wwwkqmm9.ap-northeast-1.rds.amazonaws.com:3306/xm-blog?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2b8&allowPublicKeyRetrieval=true
+    username: ${db.username}   #你本地的数据库用户名
+    password: ${db.password} #你本地的数据库密码
+    url: ${db.url}
       
     # Add Redis configuration
   redis:

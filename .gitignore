@@ -4,6 +4,10 @@
 
 # 忽略 node_modules 目录
 xm-blog/vue/node_modules/
+# 忽略含有敏感信息的配置文件
+xm-blog/springboot/src/main/resources/config.properties
+# 忽略target目录
+xm-blog/springboot/target/
 
 *.jar
 *.jar.original
