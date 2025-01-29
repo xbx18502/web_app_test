@@ -50,7 +50,7 @@ public class BlogService {
     @Resource
     CollectService collectService;
 
-    @Value("${ip:216.238.80.124}")
+    @Value("${ip:localhost}")
     private String ip;
 
     
@@ -151,10 +151,9 @@ public class BlogService {
             b.setLikesCount(likesCount);
                     // 替换 'localhost' 为配置的 ip
             String cover = b.getCover();
-            if (cover != null && cover.contains("localhost")) {
-                cover = cover.replace("localhost", ip);
-                b.setCover(cover);
-            }
+            cover="http://"+ip+":9090/api/files/"+cover;
+            b.setCover(cover);
+            
         }
         return PageInfo.of(list);
     }

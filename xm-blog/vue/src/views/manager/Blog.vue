@@ -77,7 +77,7 @@
         </el-form-item>
         <el-form-item label="封面" prop="cover">
           <el-upload
-              :action="$baseUrl + '/files/upload'"
+              :action="$baseUrl + '/api/files/upload'"
               :headers="{ token: user.token }"
               list-type="picture"
               :on-success="handleCoverSuccess"

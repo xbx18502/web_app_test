@@ -26,7 +26,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/api/blog/selectPage")
                 .excludePathPatterns("/api/blog/selectTop")
                 .excludePathPatterns("/api/blog/selectRecommend/*")
-                .excludePathPatterns("/api/files/**")
                 .excludePathPatterns("/api/category/selectById/*")
                 .excludePathPatterns("/api/category/selectAll")
                 .excludePathPatterns("/api/notice/selectById/*")

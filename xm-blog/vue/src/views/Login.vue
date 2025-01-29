@@ -100,7 +100,7 @@ export default {
               this.$message.success('登录成功')
               setTimeout(() => {
                 if(res.data.role==='ADMIN'){
-                  location.href='/home'
+                  location.href='/manager/home'
                 }
                 else{
                   location.href='/front/home'  // 跳转主页

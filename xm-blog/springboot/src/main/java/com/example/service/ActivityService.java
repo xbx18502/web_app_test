@@ -20,7 +20,7 @@ public class ActivityService {
     @Resource
     private ActivityMapper activityMapper;
 
-    @Value("${ip:216.238.80.124}")
+    @Value("${ip:localhost}")
     private String ip;
 
     /**
@@ -84,10 +84,9 @@ public class ActivityService {
         List<Activity> activityList = this.selectAll(null);
         for(Activity a : activityList){
             String cover = a.getCover();
-            if (cover != null && cover.contains("localhost")) {
-                cover = cover.replace("localhost", ip);
-                a.setCover(cover);
-            }
+            cover="http://"+ip+":9090/api/files/"+cover;
+            a.setCover(cover);
+            
         }
         activityList = activityList.stream().sorted((b1,b2)->b2.getReadCount()
                 .compareTo(b1.getReadCount())).limit(2).collect(Collectors.toList());

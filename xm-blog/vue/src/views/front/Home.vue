@@ -28,7 +28,7 @@
               </div>
             </div>
             <div style="width: 150px; height: 80px; display: flex; align-items: center; justify-content: center;">
-              <img style="max-width: 100%; max-height: 100%; border-radius: 5px;" :src="item.imageSrc" alt="">
+              <img style="max-width: 100%; max-height: 100%; border-radius: 5px;" :src="item.cover" alt="">
             </div>
           </div>
           <div v-if="total === 0" style="padding: 20px 0; text-align: center; font-size: 16px; color: #666">no data
@@ -78,7 +78,7 @@
 
           <div style="margin-bottom: 10px">
             <div v-for="item in topActivityList" :key="item.id" style="margin-bottom: 10px">
-              <a :href="'/front/activityDetail?activityId=' + item.id" target="_blank"><img :src="item.imageSrc" alt=""
+              <a :href="'/front/activityDetail?activityId=' + item.id" target="_blank"><img :src="item.cover" alt=""
                   style="width: 100%;border-radius: 5px"></a>
             </div>
           </div>
@@ -213,6 +213,7 @@ export default {
           item.imageSrc = imageUrl;
         }).catch(error => {
           console.error('获取图片失败：', error);
+          console.log("item.url", url)
           // 设置默认图片
           item.imageSrc = '@/assets/imgs/logo.png';
         });

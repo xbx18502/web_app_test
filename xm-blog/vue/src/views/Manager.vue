@@ -34,7 +34,7 @@
       <!--  侧边栏  -->
       <div class="manager-main-left">
         <el-menu :default-openeds="['info', 'user']" router style="border: none" :default-active="$route.path">
-          <el-menu-item index="/home">
+          <el-menu-item index="/manager/home">
             <i class="el-icon-s-home"></i>
             <span slot="title">system home</span>
           </el-menu-item>
@@ -42,18 +42,18 @@
             <template slot="title">
               <i class="el-icon-menu"></i><span>info management</span>
             </template>
-            <el-menu-item index="/category">blog category</el-menu-item>
-            <el-menu-item index="/notice">Announcement</el-menu-item>
-            <el-menu-item index="/blog">blog info</el-menu-item>
-            <el-menu-item index="/activity">activity info</el-menu-item>
+            <el-menu-item index="/manager/category">blog category</el-menu-item>
+            <el-menu-item index="/manager/notice">Announcement</el-menu-item>
+            <el-menu-item index="/manager/blog">blog info</el-menu-item>
+            <el-menu-item index="/manager/activity">activity info</el-menu-item>
           </el-submenu>
 
           <el-submenu index="user">
             <template slot="title">
               <i class="el-icon-menu"></i><span>user management</span>
             </template>
-            <el-menu-item index="/admin">admin info</el-menu-item>
-            <el-menu-item index="/user">user info</el-menu-item>
+            <el-menu-item index="/manager/admin">admin info</el-menu-item>
+            <el-menu-item index="/manager/user">user info</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>

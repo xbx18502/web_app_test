@@ -11,7 +11,7 @@
             </el-form-item>
 
             <el-form-item label="Cover" prop="cover">
-                <el-upload :action="$baseUrl + '/files/upload'" :headers="{ token: user.token }" list-type="picture"
+                <el-upload :action="$baseUrl + '/api/files/upload'" :headers="{ token: user.token }" list-type="picture"
                     :on-success="handleCoverSuccess">
                     <el-button type="primary">Upload Cover</el-button>
                 </el-upload>
