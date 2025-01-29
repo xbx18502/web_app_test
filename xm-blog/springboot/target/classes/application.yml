@@ -92,4 +92,3 @@ management:
   metrics:
     tags:
       application: xm-blog
-
